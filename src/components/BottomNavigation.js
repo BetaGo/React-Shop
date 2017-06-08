@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import IconExplore from 'material-ui/svg-icons/action/explore';
 import IconPerson from 'material-ui/svg-icons/social/person';
+import { Link } from 'react-router-dom';
 
 const shoppingCartIcon = <IconShoppingCart />;
 const goodsListIcon = <IconExplore />;
@@ -14,7 +15,8 @@ const myBillIcon = <IconPerson />;
  * provided. The selected `BottomNavigationItem` is determined by application
  * state (for instance, by the URL).
  */
-class BottomNavigationExampleSimple extends Component {
+
+class BottomNavigationSimple extends Component {
   state = {
     selectedIndex: 0,
   };
@@ -25,25 +27,31 @@ class BottomNavigationExampleSimple extends Component {
     return (
       <Paper zDepth={1}>
         <BottomNavigation selectedIndex={this.state.selectedIndex}>
-          <BottomNavigationItem
-            label="商品列表"
-            icon={goodsListIcon}
-            onTouchTap={() => this.select(0)}
-          />
-          <BottomNavigationItem
-            label="购物车"
-            icon={shoppingCartIcon}
-            onTouchTap={() => this.select(1)}
-          />
-          <BottomNavigationItem
+            <BottomNavigationItem
+              label="商品列表"
+              icon={goodsListIcon}
+              onTouchTap={() => this.select(0)}
+              containerElement={<Link to="/goods-list"/>}
+            />
+
+            <BottomNavigationItem
+              label="购物车"
+              icon={shoppingCartIcon}
+              onTouchTap={() => this.select(1)}
+              containerElement={<Link to="/shopping-cart"/>}
+            />
+
+            <BottomNavigationItem
             label="我的订单"
             icon={myBillIcon}
             onTouchTap={() => this.select(2)}
+            containerElement={<Link to="/my-bill"/>}
           />
+
         </BottomNavigation>
       </Paper>
     );
   }
 }
 
-export default BottomNavigationExampleSimple;
+export default BottomNavigationSimple;

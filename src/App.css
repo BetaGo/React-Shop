@@ -8,6 +8,10 @@
   width: 100vw;
   z-index: 100; }
 
+.App-content-container {
+  padding-top: 64px;
+  padding-bottom: 56px; }
+
 .App-bottom-menu {
   position: fixed;
   bottom: 0;
