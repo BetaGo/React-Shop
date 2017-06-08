@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import CartTable from './cartTable';
+import PlaceAnOrder from './placeAnOrder';
 
-const ShoppingCart = () => {
-  return (
-    <div>
-      购物车
-    </div>
-  )
+class ShoppingCart extends Component {
+  render() {
+    return (
+      <div>
+        <CartTable />
+        <PlaceAnOrder />
+      </div>
+    );
+  }
 }
 
 export default ShoppingCart;

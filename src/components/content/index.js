@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import GoodsList from './goodsList';
-import MyBill from './myBill';
+import MyOrder from './myOrder';
 import ShoppingCart from './shoppingCart';
 
 class Content extends Component {
@@ -10,7 +10,7 @@ class Content extends Component {
       <div>
         <Route path="/goods-list" component={GoodsList} />
         <Route path="/shopping-cart" component={ShoppingCart} />
-        <Route path="/my-bill" component={MyBill} />
+        <Route path="/my-order" component={MyOrder} />
       </div>
     );
   }

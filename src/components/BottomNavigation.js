@@ -45,7 +45,7 @@ class BottomNavigationSimple extends Component {
             label="我的订单"
             icon={myBillIcon}
             onTouchTap={() => this.select(2)}
-            containerElement={<Link to="/my-bill"/>}
+            containerElement={<Link to="/my-order"/>}
           />
 
         </BottomNavigation>

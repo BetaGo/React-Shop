@@ -20,7 +20,7 @@ const TabsExampleIconText = () => (
     <Tab
       icon={<MapsPersonPin />}
       label="NEARBY"
-      containerElement={<Link to="/my-bill"/>}
+      containerElement={<Link to="/my-order"/>}
     />
   </Tabs>
 );
