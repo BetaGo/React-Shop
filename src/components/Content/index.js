@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import GoodsList from './goodsList';
-import MyOrder from './myOrder';
-import ShoppingCart from './shoppingCart';
+import GoodsList from './GoodsList';
+import MyOrder from './MyOrder';
+import ShoppingCart from './ShoppingCart';
 
 class Content extends Component {
   render() {

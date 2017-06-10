@@ -9,38 +9,6 @@ import {
 } from 'material-ui/Table';
 
 
-
-const tableData = [
-  {
-    name: 'John Smith',
-    status: 'Employed',
-  },
-  {
-    name: 'Randal White',
-    status: 'Unemployed',
-  },
-  {
-    name: 'Stephanie Sanders',
-    status: 'Employed',
-  },
-  {
-    name: 'Steve Brown',
-    status: 'Employed',
-  },
-  {
-    name: 'Joyce Whitten',
-    status: 'Employed',
-  },
-  {
-    name: 'Samuel Roberts',
-    status: 'Employed',
-  },
-  {
-    name: 'Adam Moore',
-    status: 'Employed',
-  },
-];
-
 /**
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
  */
@@ -59,6 +27,7 @@ export default class TableExampleComplex extends Component {
   };
 
   render() {
+    const {tableData} = this.props
     return (
       <div>
         <Table
@@ -85,11 +54,11 @@ export default class TableExampleComplex extends Component {
             showRowHover={this.state.showRowHover}
             stripedRows={this.state.stripedRows}
           >
-            {tableData.map( (row, index) => (
-              <TableRow key={index}>
-                <TableRowColumn>{index}</TableRowColumn>
+            {tableData.map( (row) => (
+              <TableRow key={row._id}>
                 <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.status}</TableRowColumn>
+                <TableRowColumn>{row.price}</TableRowColumn>
+                <TableRowColumn>{row.number}</TableRowColumn>
               </TableRow>
               ))}
           </TableBody>

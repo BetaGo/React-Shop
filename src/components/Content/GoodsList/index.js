@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GoodsCard from './goodsCard';
+import GoodsCard from './GoodsCard';
 
 
 const goods = [{
@@ -28,7 +28,7 @@ const goods = [{
       "avatar": "avatar-noone.jpg"
     },
     "name": "风景依旧，烟雨江南",
-    "desc": "江南好，风景旧曾谙。",
+    "desc": "江南好，风景旧曾谙。日出江花红胜火，春来江水绿如蓝，能不忆江南？",
     "cover": "cover.jpg",
     "price": 666,
     "remain": 5,
@@ -75,7 +75,7 @@ class GoodsList extends Component {
     return (
       <div>
         {goods.map((goods,index) => (
-          <GoodsCard key={`goodsCard-${index}`} goods={goods} />
+          <GoodsCard key={goods._id} goods={goods} />
         ))}
       </div>
     );

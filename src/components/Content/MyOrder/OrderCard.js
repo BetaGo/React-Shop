@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Clear from 'material-ui/svg-icons/content/clear'
+import './OrderCard.css';
 
-import './goodsList.css';
-
-class GoodsCard extends Component {
+class OrderCard extends Component {
   constructor(props) {
     super(props);
 
@@ -16,22 +16,32 @@ class GoodsCard extends Component {
   }
 
   render() {
-    const { name, desc, cover, price} = this.props.goods;
+    const { name, desc, cover, price, finished} = this.props.order;
+
     return (
       <Card>
-        <div className="goods-card-container">
-          <div className="goods-card-left">
-            <CardMedia>
+        <div className="order-card-container">
+          <div className="order-card-left">
+            <CardMedia
+              overlay={<CardTitle title={finished ? '已完成' : '待取货'} />}
+            >
               <img src={`mock/image/${cover}`} alt="" />
             </CardMedia>
           </div>
-          <div className="goods-card-right">
+          <div className="order-card-right">
             <CardTitle title={name} subtitle={`价格：${price}元`} />
             <CardText>
               {desc}
             </CardText>
             <CardActions>
-              <FlatButton label="加入购物车" />
+              { finished ?
+                '' :
+                <FlatButton
+                  label='取消订单'
+                  icon={<Clear/>}
+                  secondary={true}
+                />
+              }
             </CardActions>
           </div>
         </div>
@@ -40,4 +50,4 @@ class GoodsCard extends Component {
   }
 }
 
-export default GoodsCard;
+export default OrderCard;
