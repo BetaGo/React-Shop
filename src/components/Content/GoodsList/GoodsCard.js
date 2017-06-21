@@ -6,18 +6,10 @@ import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import './GoodsList.css';
 
 class GoodsCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-
-  }
 
   render() {
     const { name, desc, cover, price} = this.props.goods;
+
     return (
       <Card>
         <div className="goods-card-container">
