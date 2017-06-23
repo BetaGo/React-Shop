@@ -1,24 +1,24 @@
-.App-container {
+.Frame-container {
   min-height: 100vh;
 }
 
-.App-top-menu {
+.Frame-top-menu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  z-index: 100;
+  z-index: 101;
 }
 
-.App-content-container {
+.Frame-content-container {
   padding-top: 64px;
   padding-bottom: 56px;
 }
 
-.App-bottom-menu {
+.Frame-bottom-menu {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
-  z-index: 101;
+  z-index: 100;
 }
