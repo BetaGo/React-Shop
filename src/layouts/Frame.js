@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import AppBar from './AppBar';
-import BottomNavigation from './BottomNavigation';
-import Drawer from './Drawer';
+import AppBar from '../components/AppBar';
+import BottomNavigation from '../components/BottomNavigation';
+import Drawer from '../components/Drawer';
 
 import "./Frame.css"
 
@@ -14,7 +14,7 @@ class Frame extends Component {
           <Drawer />
         </div>
         <div className="Frame-content-container">
-          {this.props.child}
+          {this.props.children}
         </div>
         <div className="Frame-bottom-menu">
           <BottomNavigation />

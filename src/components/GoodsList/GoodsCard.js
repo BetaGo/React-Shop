@@ -3,7 +3,7 @@ import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Car
 import FlatButton from 'material-ui/FlatButton';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 
-import './GoodsList.css';
+import './GoodsCard.css';
 
 class GoodsCard extends Component {
   constructor(props) {

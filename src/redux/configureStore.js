@@ -4,15 +4,17 @@ import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-ro
 
 import reducers from './reducers';
 
-import goodsList from '../../public/api/goodsList.json';
-import shoppingCartList from '../../public/api/shoppingCartList.json';
-import orderList from '../../public/api/orderList.json';
+import goodsList from '../api/goodsList.json';
+// import shoppingCartList from '../api/shoppingCartList.json';
+// import orderList from '../api/orderList.json';
 
 const defaultState={
   goodsList,
-  shoppingCartList,
-  orderList
+ // shoppingCartList,
+ // orderList
 }
+
+console.log(defaultState);
 
 export const history = createHistory();
 

@@ -1,6 +1,4 @@
-{
-  "isAuthored": true,
-  "goodsList": [{
+[{
       "_id": "5933c7565f61e206ad047295",
       "author": {
         "_id": "5933c5cc5f61e206ad047291",
@@ -81,4 +79,3 @@
       "created_at": "2017-06-04 16:23"
     }
   ]
-}

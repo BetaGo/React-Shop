@@ -11,8 +11,10 @@ const routes = browserHistory => (
   <BrowserRouter history={browserHistory}>
     <Frame>
       <Route path="/goods-list" component={GoodsList} />
-      <Route path="/shopping-cart" component={ShoppingCart} />
-      <Route path="/my-order" component={MyOrder} />
+      {
+        // <Route path="/shopping-cart" component={ShoppingCart} />
+        // <Route path="/my-order" component={MyOrder} />
+      }
     </Frame>
   </BrowserRouter>
 );
