@@ -13,7 +13,7 @@ class NumberControl extends Component {
     this.handleAdd = this.handleAdd.bind(this);
 
     this.state ={
-      number: 1,
+      number: this.props.number,
     }
   }
 

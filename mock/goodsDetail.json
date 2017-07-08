@@ -1,0 +1,15 @@
+{
+  "_id": "5933c7565f61e206ad047295",
+  "name": "Bird - Cloud",
+  "desc": "The bird wishes it were a cloud. The cloud wishes it were a bird.",
+  "cover": "http://placeimg.com/640/480/any",
+  "images": [
+    "http://placeimg.com/640/480/any",
+    "http://placeimg.com/640/480/animals",
+    "http://placeimg.com/640/480/arch",
+    "http://placeimg.com/640/480/people"
+  ],
+  "price": 999,
+  "remain": 9,
+  "created_at": "2017-06-04 16:39"
+}

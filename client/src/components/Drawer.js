@@ -26,7 +26,6 @@ class DrawerUndocked extends Component {
       <div>
         <Drawer
           docked={false}
-          width={200}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
