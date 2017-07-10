@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {GridList} from 'material-ui/GridList';
+import { GridList, GridTile } from 'material-ui/GridList';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 
 
@@ -10,9 +10,7 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    width: 500,
-    height: 450,
-    overflowY: 'auto',
+    width: '100%'
   },
 }
 
@@ -20,18 +18,25 @@ class GoodsGridList extends Component {
 
   render() {
 
-    const { name, cover, price} = this.props.goods;
+    const goodsList = this.props.goodsList;
 
     return (
       <div style={styles.root}>
         <GridList
           cellHeight={180}
           style={styles.gridList}
-          title={name}
-          subtitle={<span>￥<b>{price}</b></span>}
-          actionIcon={<AddShoppingCart />}
         >
-          <img src={cover} alt="" />
+        {goodsList.map((goods) => (
+          <GridTile
+            key={goods._id}
+            title={goods.name}
+            subtitle={<span>￥<b>{goods.price}</b></span>}
+            actionIcon={<AddShoppingCart onTouchTap={this.props.addToShoppingCart} ></AddShoppingCart>}
+            onTouchTap={this.props.showGoodsDetail}
+          >
+            <img src={goods.cover} alt={goods.name}/>
+          </GridTile>
+        ))}
         </GridList>
       </div>
     );

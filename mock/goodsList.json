@@ -3,6 +3,12 @@
     "name": "Bird - Cloud",
     "desc": "The bird wishes it were a cloud. The cloud wishes it were a bird.",
     "cover": "http://placeimg.com/640/480/any",
+    "images": [
+      "http://placeimg.com/640/480/any",
+      "http://placeimg.com/640/480/animals",
+      "http://placeimg.com/640/480/arch",
+      "http://placeimg.com/640/480/people"
+    ],
     "price": 999,
     "remain": 9,
     "created_at": "2017-06-04 16:39"
@@ -12,6 +18,12 @@
     "name": "飞鸟",
     "desc": "Stray birds of summer come to my window to sing and fly away. And yellow leaves of autumn, which have no songs, flutter and fall there with a sign.",
     "cover": "http://placeimg.com/640/480/any",
+    "images": [
+      "http://placeimg.com/640/480/any",
+      "http://placeimg.com/640/480/animals",
+      "http://placeimg.com/640/480/arch",
+      "http://placeimg.com/640/480/people"
+    ],
     "price": 98,
     "remain": 1,
     "created_at": "2017-06-04 16:35"
@@ -21,6 +33,12 @@
     "name": "北客有来初未识",
     "desc": "南金无价喜新尝。含滋嚼句齿牙香。",
     "cover": "http://placeimg.com/640/480/any",
+    "images": [
+      "http://placeimg.com/640/480/any",
+      "http://placeimg.com/640/480/animals",
+      "http://placeimg.com/640/480/arch",
+      "http://placeimg.com/640/480/people"
+    ],
     "price": 99,
     "remain": 2,
     "created_at": "2017-06-04 16:30"
@@ -30,6 +48,12 @@
     "name": "江南好，风景旧曾谙。",
     "desc": " 日出江花红胜火， 春来江水绿如蓝， 能不忆江南？",
     "cover": "http://placeimg.com/640/480/any",
+    "images": [
+      "http://placeimg.com/640/480/any",
+      "http://placeimg.com/640/480/animals",
+      "http://placeimg.com/640/480/arch",
+      "http://placeimg.com/640/480/people"
+    ],
     "price": 998,
     "remain": 2,
     "created_at": "2017-06-04 16:28"
@@ -39,6 +63,12 @@
     "name": "昨夜西风凋碧树",
     "desc": "独上高楼，望尽天涯路。",
     "cover": "http://placeimg.com/640/480/any",
+    "images": [
+      "http://placeimg.com/640/480/any",
+      "http://placeimg.com/640/480/animals",
+      "http://placeimg.com/640/480/arch",
+      "http://placeimg.com/640/480/people"
+    ],
     "price": 999,
     "remain": 1,
     "created_at": "2017-06-04 16:23"
