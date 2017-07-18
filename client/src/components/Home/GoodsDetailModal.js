@@ -2,43 +2,18 @@ import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import Carousel from '../shared/Carousel/Carousel';
-import NumberControl from './NumberControl';
 
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import CreditCard from 'material-ui/svg-icons/action/credit-card';
 import Explore from 'material-ui/svg-icons/action/explore';
+import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import IconRemoveCircle from 'material-ui/svg-icons/content/remove-circle';
+import IconAddCircle from 'material-ui/svg-icons/content/add-circle';
+
 
 
 class GoodsDetailModal extends Component {
-  constructor(props) {
-    super(props);
-
-    let currProps = this.props;
-    let open = false;
-    if ( open in currProps ) {
-      open = currProps.open;
-    } else {
-      open = false;
-    }
-
-    this.state = {
-      open,
-    }
-  }
-
-
-
-  handleOpen() {
-    this.setState({
-      open: true,
-    });
-  }
-
-  handleClose() {
-    this.setState({
-      open: false,
-    })
-  }
 
   render() {
 
@@ -47,29 +22,47 @@ class GoodsDetailModal extends Component {
     return (
       <div>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
         >
           <Carousel images={images} />
           <h2>{name}</h2>
           <p>{desc}</p>
-          <NumberControl number={remain} />
+          <div>
+            <IconButton
+              tooltip="reduce"
+              onTouchTap={this.props.reduceNumber}
+            >
+              <IconRemoveCircle />
+            </IconButton>
+            <TextField
+              value={this.props.number}
+              onChange={this.props.setNumber}
+            />
+            <IconButton
+              tooltip="add"
+              onTouchTap={this.props.addNumber}
+            >
+              <IconAddCircle />
+            </IconButton>
+          </div>
+          <span>剩余数量： {remain}</span>
           <div>
             <RaisedButton
               label="看看别的"
               icon={<Explore />}
-              onTouchTap={this.handleClose()}
+              onTouchTap={this.this.props.closeModal}
             />
             <RaisedButton
               label="加入购物车"
               secondary={true}
               icon={<AddShoppingCart />}
-              onTouchTap={this.handleClose()}
+              onTouchTap={this.props.addToShoppingCart}
             />
             <RaisedButton
               label="立即购买"
               primary={true}
               icon={<CreditCard />}
-              onTouchTap={this.handleClose()}
+              onTouchTap={this.props.buyNow}
             />
           </div>
         </Dialog>

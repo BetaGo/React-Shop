@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GridList, GridTile } from 'material-ui/GridList';
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+import CircularProgress from 'material-ui/CircularProgress';
 
 
 const styles = {
@@ -16,7 +17,16 @@ const styles = {
 
 class GoodsGridList extends Component {
 
+  componentDidMount() {
+    this.props.loadGoodsList();
+  }
+
+
   render() {
+
+    if (this.props.loading) {
+      return <CircularProgress size={60} thickness={7} />;
+    }
 
     const goodsList = this.props.goodsList;
 
@@ -31,7 +41,12 @@ class GoodsGridList extends Component {
             key={goods._id}
             title={goods.name}
             subtitle={<span>￥<b>{goods.price}</b></span>}
-            actionIcon={<AddShoppingCart onTouchTap={this.props.addToShoppingCart} ></AddShoppingCart>}
+            actionIcon={
+              <AddShoppingCart
+                onTouchTap={this.props.addToShoppingCart}
+                color="white"
+               />
+              }
             onTouchTap={this.props.showGoodsDetail}
           >
             <img src={goods.cover} alt={goods.name}/>

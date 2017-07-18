@@ -2,6 +2,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 
+import ThunkMiddleware from 'redux-thunk';
+
 import reducers from './reducers';
 
 import goodsList from '../api/goodsList.json';
@@ -18,7 +20,7 @@ console.log(defaultState);
 
 export const history = createHistory();
 
-const middleware = routerMiddleware(history);
+const RouterMiddleware = routerMiddleware(history);
 
 const store = createStore(
   combineReducers({
@@ -26,7 +28,7 @@ const store = createStore(
     router: routerReducer
   }),
   defaultState,
-  applyMiddleware(middleware)
+  applyMiddleware(RouterMiddleware, ThunkMiddleware)
 );
 
 export default store;

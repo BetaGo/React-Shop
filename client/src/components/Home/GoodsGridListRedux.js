@@ -5,13 +5,33 @@ const initialState = {
 };
 
 export function loadGoodsList() {
+  /*
   return {
     url: '/api/goods/goods-list',
     types: ['LOAD_GOODS_LIST', 'LOAD_GOODS_LIST_SUCCESS', 'LOAD_GOODS_LIST_ERROR']
   }
+  */
+  return dispatch => {
+    dispatch({ type: 'LOAD_GOODS_LIST'});
+    return fetch('/api/goods/goods-list')
+      .then(response => response.json())
+      .then(json => {
+        dispatch({
+          type: 'LOAD_GOODS_LIST_SUCCESS',
+          payload: json,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: 'LOAD_GOODS_LIST_ERROR',
+          payload: error,
+        });
+      });
+  }
 }
 
 export function addToShoppingCart(e) {
+  e.stopPropagation();
   return {
     type: 'ADD_TO_SHOPPING_CART',
     payload: {
