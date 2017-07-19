@@ -1,5 +1,4 @@
 const initialState = {
-  goodsDetail: {},
   numberOfGoods: 1,
   visible: false,
 };
@@ -35,28 +34,61 @@ export function hideModal() {
 export function addNumberOfGoods() {
   // TODO:
   console.log('action: addNumberOfGoods');
+  return {
+    type: 'ADD_NUMBER_OF_GOODS'
+  }
 }
 
 
-export function reduceNumber() {
+export function reduceNumberOfGoods() {
   // TODO:
   console.log('action: reduceNumber');
+  return {
+    type: 'REDUCE_NUMBER_OF_GOODS'
+  }
 }
 
 
 export function addToShoppingCart() {
   // TODO:
-  console.log('action: addToShoppingCart');
+  return dispatch => {
+    dispatch({type: 'HIDE_MODAL'});
+      return dispatch({
+        type: 'ADD_TO_SHOPPING_CART'
+      })
+  }
 }
 
 
 export function buyNow() {
   // TODO:
-  console.log('action: buyNow');
+  return dispatch => {
+    dispatch({type: 'HIDE_MODAL'})
+    return dispatch({
+      type: 'BUY_NOW'
+    })
+  }
 }
 
 
 export default function goodsDetail( state = initialState, action) {
   // TODO:
-  return state;
+  switch (action.type) {
+    case 'SHOW_MODAL': {
+      return {
+        ...state,
+        visible: true,
+      }
+    }
+
+    case 'HIDE_MODAL': {
+      return {
+        ...state,
+        visible: false,
+      }
+    }
+
+    default:
+      return state;
+  }
 }

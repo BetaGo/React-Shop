@@ -2,6 +2,7 @@ const initialState = {
   goodsList: [],
   loading: true,
   error: false,
+  selectedIndex: 0,
 };
 
 export function loadGoodsList() {
@@ -40,16 +41,29 @@ export function addToShoppingCart(e) {
   }
 }
 
-export function showGoodsDetail(e) {
+export function setSelectedIndex(index) {
+  // console.log(index);
   return {
-    type: 'SHOW_GOODS_DETAIL',
-    payload: {
-      // TODO:
-    }
+    type: 'SET_SELECTED_INDEX',
+    payload: index,
+  }
+}
+
+export function showGoodsDetail(index) {
+
+  return dispatch => {
+    dispatch({
+      type: 'SET_SELECTED_INDEX',
+      payload: index,
+    });
+    return dispatch({
+      type: 'SHOW_MODAL',
+    })
   }
 }
 
 export default function goodsList(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case 'LOAD_GOODS_LIST': {
       return {
@@ -83,10 +97,10 @@ export default function goodsList(state = initialState, action) {
       }
     }
 
-    case 'SHOW_GOODS_DETAIL': {
+    case 'SET_SELECTED_INDEX': {
       return {
         ...state,
-        // TODO:
+        selectedIndex: action.payload,
       }
     }
 

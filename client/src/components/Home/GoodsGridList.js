@@ -25,7 +25,15 @@ class GoodsGridList extends Component {
   render() {
 
     if (this.props.loading) {
-      return <CircularProgress size={60} thickness={7} />;
+      return (
+        <div style={{display: 'flex', paddingTop: '2em'}}>
+          <CircularProgress
+            size={60}
+            thickness={7}
+            style={{margin: 'auto'}}
+          />
+        </div>
+      );
     }
 
     const goodsList = this.props.goodsList;
@@ -36,7 +44,7 @@ class GoodsGridList extends Component {
           cellHeight={180}
           style={styles.gridList}
         >
-        {goodsList.map((goods) => (
+        {goodsList.map((goods, index) => (
           <GridTile
             key={goods._id}
             title={goods.name}
@@ -47,7 +55,7 @@ class GoodsGridList extends Component {
                 color="white"
                />
               }
-            onTouchTap={this.props.showGoodsDetail}
+            onTouchTap={this.props.showGoodsDetail.bind(null, index)}
           >
             <img src={goods.cover} alt={goods.name}/>
           </GridTile>

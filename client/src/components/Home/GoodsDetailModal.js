@@ -17,12 +17,19 @@ class GoodsDetailModal extends Component {
 
   render() {
 
-    const { images, name, desc, remain } = this.props.goodsDetail;
+    const { visible, images, name, desc, remain, numberOfGoods } = this.props;
+    const { reduceNumberOfGoods, setNumber, addNumberOfGoods, hideModal, addToShoppingCart, buyNow } = this.props;
+    const style = {
+      width: '90%',
+      maxWidth: 'none',
+    };
 
     return (
       <div>
         <Dialog
-          open={this.props.open}
+          open={visible}
+          autoScrollBodyContent={true}
+          contentStyle={style}
         >
           <Carousel images={images} />
           <h2>{name}</h2>
@@ -30,17 +37,19 @@ class GoodsDetailModal extends Component {
           <div>
             <IconButton
               tooltip="reduce"
-              onTouchTap={this.props.reduceNumber}
+              onTouchTap={reduceNumberOfGoods}
             >
               <IconRemoveCircle />
             </IconButton>
             <TextField
-              value={this.props.number}
-              onChange={this.props.setNumber}
+              name="numberOfGoods"
+              value={numberOfGoods}
+              onChange={setNumber}
+              style={{width: '3em'}}
             />
             <IconButton
               tooltip="add"
-              onTouchTap={this.props.addNumber}
+              onTouchTap={addNumberOfGoods}
             >
               <IconAddCircle />
             </IconButton>
@@ -50,19 +59,19 @@ class GoodsDetailModal extends Component {
             <RaisedButton
               label="看看别的"
               icon={<Explore />}
-              onTouchTap={this.this.props.closeModal}
+              onTouchTap={hideModal}
             />
             <RaisedButton
               label="加入购物车"
               secondary={true}
               icon={<AddShoppingCart />}
-              onTouchTap={this.props.addToShoppingCart}
+              onTouchTap={addToShoppingCart}
             />
             <RaisedButton
               label="立即购买"
               primary={true}
               icon={<CreditCard />}
-              onTouchTap={this.props.buyNow}
+              onTouchTap={buyNow}
             />
           </div>
         </Dialog>

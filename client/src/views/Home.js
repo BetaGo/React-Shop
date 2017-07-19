@@ -10,14 +10,24 @@ import * as detailModalActions from '../components/Home/GoodsDetailModalRedux';
 import * as gridListActions from '../components/Home/GoodsGridListRedux';
 
 class Home extends Component {
+
   render() {
+    const index = this.props.goodsList.selectedIndex;
+    const goodsDetail = this.props.goodsList.goodsList[index];
 
     return (
       <div>
-        {
-          // <GoodsDetailModal />
-        }
-        <GoodsGridList {...this.props.goodsList} {...this.props.gridAction} />
+
+        <GoodsDetailModal
+          {...goodsDetail}
+          {...this.props.modalActions}
+          {...this.props.goodsDetailModal}
+        />
+
+        <GoodsGridList
+          {...this.props.goodsList}
+          {...this.props.gridActions}
+        />
       </div>
     );
   }
@@ -26,10 +36,10 @@ class Home extends Component {
 export default connect(
   state => ({
     goodsList: state.goods.goodsList,
-    goodsDetail: state.goodsDetail,
+    goodsDetailModal: state.goods.goodsDetailModal,
   }),
   dispatch => ({
-    modalAction: bindActionCreators(detailModalActions, dispatch),
-    gridAction: bindActionCreators(gridListActions, dispatch),
+    modalActions: bindActionCreators(detailModalActions, dispatch),
+    gridActions: bindActionCreators(gridListActions, dispatch),
   })
 )(Home);

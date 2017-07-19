@@ -157,7 +157,7 @@ class Carousel extends Component {
               style={{
                 transform: `translateX(${ (index - activeIndex) * width + left }px)`
               }}
-              src={image.src}
+              src={image&&image.src ? image.src : image}
               alt={ image && image.alt ? image.alt : '' }
               key={`image-${index}`}
             />
