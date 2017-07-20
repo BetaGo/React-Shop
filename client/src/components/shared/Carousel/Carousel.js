@@ -17,7 +17,7 @@ class Carousel extends Component {
     this.state = {
       height: "100%",
       left: 0,
-      activeIndex: 1
+      activeIndex: 0
     }
 
     // this.handlePointerClick = this.handlePointerClick.bind(this);

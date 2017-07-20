@@ -11,6 +11,7 @@ import IconButton from 'material-ui/IconButton';
 import IconRemoveCircle from 'material-ui/svg-icons/content/remove-circle';
 import IconAddCircle from 'material-ui/svg-icons/content/add-circle';
 
+import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 
 
 class GoodsDetailModal extends Component {
@@ -19,19 +20,39 @@ class GoodsDetailModal extends Component {
 
     const { visible, images, name, desc, remain, numberOfGoods } = this.props;
     const { reduceNumberOfGoods, setNumber, addNumberOfGoods, hideModal, addToShoppingCart, buyNow } = this.props;
-    const style = {
-      width: '90%',
-      maxWidth: 'none',
-    };
+
+    const actions = [
+      <BottomNavigation>
+        <BottomNavigationItem
+          label="看看别的"
+          icon={<Explore />}
+          onTouchTap={hideModal}
+        />
+        <BottomNavigationItem
+          label="加入购物车"
+          icon={<AddShoppingCart />}
+          onTouchTap={addToShoppingCart}
+        />
+        <BottomNavigationItem
+          label="立即购买"
+          icon={<CreditCard />}
+          onTouchTap={buyNow}
+        />
+      </BottomNavigation>
+    ];
 
     return (
       <div>
         <Dialog
+          title="商品详情"
+          actions={actions}
           open={visible}
+          modal={true}
           autoScrollBodyContent={true}
-          contentStyle={style}
         >
-          <Carousel images={images} />
+          <div style={{width: "calc(75vw - 48px)", height: "calc((75vw - 48px)*0.75)"}}>
+            <Carousel images={images} />
+          </div>
           <h2>{name}</h2>
           <p>{desc}</p>
           <div>
@@ -55,25 +76,6 @@ class GoodsDetailModal extends Component {
             </IconButton>
           </div>
           <span>剩余数量： {remain}</span>
-          <div>
-            <RaisedButton
-              label="看看别的"
-              icon={<Explore />}
-              onTouchTap={hideModal}
-            />
-            <RaisedButton
-              label="加入购物车"
-              secondary={true}
-              icon={<AddShoppingCart />}
-              onTouchTap={addToShoppingCart}
-            />
-            <RaisedButton
-              label="立即购买"
-              primary={true}
-              icon={<CreditCard />}
-              onTouchTap={buyNow}
-            />
-          </div>
         </Dialog>
       </div>
     );
