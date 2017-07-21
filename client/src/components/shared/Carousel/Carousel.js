@@ -1,24 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 import './carousel.css';
 
 
-function getOuterWidth(el) {
-  return el.offsetWidth;
-}
-
 class Carousel extends Component {
+
+  static propTypes = {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  }
+
+  static defaultProps = {
+    height: 480,
+    width: 640,
+  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      height: "100%",
+      height: this.props.height,
+      width: this.props.width,
       left: 0,
-      activeIndex: 0
-    }
+      activeIndex: 0,
+    };
 
     // this.handlePointerClick = this.handlePointerClick.bind(this);
     this.onNodeTouchStart = this.onNodeTouchStart.bind(this);
@@ -32,15 +45,6 @@ class Carousel extends Component {
     this.touchStartTime = null;
   }
 
-
-  componentDidMount() {
-    const node = ReactDOM.findDOMNode(this);
-
-    this.setState({
-      height: getOuterWidth(node) * 0.75,
-    })
-  }
-
   onNodeTouchStart(e) {
     this.touchStartX = e.touches[0].pageX;
     this.touchStartY = e.touches[0].pageY;
@@ -48,8 +52,7 @@ class Carousel extends Component {
   }
 
   onNodeTouchMove(e) {
-
-    if ( this.state.activeIndex === this.props.images.length - 1 ||
+    if (this.state.activeIndex === this.props.images.length - 1 ||
       this.state.activeIndex === 0
     ) {
       return;
@@ -63,7 +66,7 @@ class Carousel extends Component {
     if (Math.abs(dX) < 10 ||
       (Math.abs(dX) < Math.abs(dY))
     ) {
-      return
+      return;
     }
 
     this.setState({
@@ -79,7 +82,7 @@ class Carousel extends Component {
     const dY = currentY - this.touchStartY;
     const dT = currentTime - this.touchStartTime;
 
-    const width = this.state.height / 0.75;
+    const width = this.state.width;
 
     if (Math.abs(dX) < 10 ||
       (Math.abs(dX) < Math.abs(dY))
@@ -87,7 +90,7 @@ class Carousel extends Component {
       return;
     }
 
-    if ( Math.abs(dX) > width / 2 || dT < 800) {
+    if (Math.abs(dX) > width / 2 || dT < 800) {
       if (dX > 0 &&
         this.state.activeIndex > 0
         ) {
@@ -114,56 +117,56 @@ class Carousel extends Component {
     });
   }
 
-
-  getPointer(number, activeIndex) {
-    let pointers = [];
-    for(let i = 0; i < number; i++) {
-      pointers.push(<span
-        className={
-          i === activeIndex ? "carousel-pointer carousel-pointer-active" : "carousel-pointer"
-        }
-        key={`pointer-${i}`}
-        >
-        </span>)
+  getPointer() {
+    const pointers = [];
+    const activeIndex = this.state.activeIndex;
+    const number = this.props.images.length;
+    for (let i = 0; i < number; i += 1) {
+      pointers.push(
+        <span
+          className={
+            i === activeIndex ? 'carousel-pointer carousel-pointer-active' : 'carousel-pointer'
+          }
+          key={`pointer-${i}`}
+        />,
+      );
     }
+
     return (
       <div className="carousel-pointer-container">
         <div className="carousel-pointers">
           { pointers }
         </div>
       </div>
-    )
+    );
   }
 
-
   render() {
-
     const { images } = this.props;
-    const { height, activeIndex, left } = this.state;
-    const width = height / 0.75;
+    const { height, width, activeIndex, left } = this.state;
 
     return (
       <div
         className="carousel-root"
-        style={{height: height}}
+        style={{ height, width }}
         onTouchStart={this.onNodeTouchStart}
         onTouchMove={this.onNodeTouchMove}
         onTouchEnd={this.onNodeTouchEnd}
       >
         {
-          images.map((image, index, images) => {
-            return <img
+          images.map((image, index) => (
+            <img
               className="carousel-image"
               style={{
-                transform: `translateX(${ (index - activeIndex) * width + left }px)`
+                transform: `translateX(${((index - activeIndex) * width) + left}px)`,
               }}
-              src={image&&image.src ? image.src : image}
-              alt={ image && image.alt ? image.alt : '' }
+              src={image && image.src ? image.src : image}
+              alt={image && image.alt ? image.alt : ''}
               key={`image-${index}`}
             />
-          })
+          ))
         }
-        {this.getPointer(images.length, activeIndex)}
+        {this.getPointer()}
       </div>
     );
   }

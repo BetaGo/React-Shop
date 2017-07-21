@@ -3,7 +3,6 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 
 import ThunkMiddleware from 'redux-thunk';
-import PromiseMiddleware from 'redux-promise';
 
 import reducers from './reducers';
 
@@ -15,9 +14,9 @@ const RouterMiddleware = routerMiddleware(history);
 const store = createStore(
   combineReducers({
     ...reducers,
-    router: routerReducer
+    router: routerReducer,
   }),
-  applyMiddleware(RouterMiddleware, ThunkMiddleware, PromiseMiddleware)
+  applyMiddleware(RouterMiddleware, ThunkMiddleware),
 );
 
 export default store;

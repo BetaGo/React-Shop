@@ -12,23 +12,23 @@ export function loadGoodsList() {
     types: ['LOAD_GOODS_LIST', 'LOAD_GOODS_LIST_SUCCESS', 'LOAD_GOODS_LIST_ERROR']
   }
   */
-  return dispatch => {
-    dispatch({ type: 'LOAD_GOODS_LIST'});
+  return (dispatch) => {
+    dispatch({ type: 'LOAD_GOODS_LIST' });
     return fetch('/api/goods/goods-list')
       .then(response => response.json())
-      .then(json => {
+      .then((json) => {
         dispatch({
           type: 'LOAD_GOODS_LIST_SUCCESS',
           payload: json,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({
           type: 'LOAD_GOODS_LIST_ERROR',
           payload: error,
         });
       });
-  }
+  };
 }
 
 export function addToShoppingCart(e) {
@@ -37,8 +37,8 @@ export function addToShoppingCart(e) {
     type: 'ADD_TO_SHOPPING_CART',
     payload: {
       // TODO:
-    }
-  }
+    },
+  };
 }
 
 export function setSelectedIndex(index) {
@@ -46,20 +46,19 @@ export function setSelectedIndex(index) {
   return {
     type: 'SET_SELECTED_INDEX',
     payload: index,
-  }
+  };
 }
 
 export function showGoodsDetail(index) {
-
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: 'SET_SELECTED_INDEX',
       payload: index,
     });
     return dispatch({
       type: 'SHOW_MODAL',
-    })
-  }
+    });
+  };
 }
 
 export default function goodsList(state = initialState, action) {
@@ -78,7 +77,7 @@ export default function goodsList(state = initialState, action) {
         ...state,
         goodsList: action.payload,
         loading: false,
-        error: false
+        error: false,
       };
     }
 
@@ -86,22 +85,22 @@ export default function goodsList(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: true
-      }
+        error: true,
+      };
     }
 
     case 'ADD_TO_SHOPPING_CART': {
       return {
         ...state,
         // TODO:
-      }
+      };
     }
 
     case 'SET_SELECTED_INDEX': {
       return {
         ...state,
         selectedIndex: action.payload,
-      }
+      };
     }
 
     default:

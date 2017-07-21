@@ -17,16 +17,15 @@ class Home extends Component {
 
     return (
       <div>
+        <GoodsGridList
+          {...this.props.goodsList}
+          {...this.props.gridActions}
+        />
 
         <GoodsDetailModal
           {...goodsDetail}
           {...this.props.modalActions}
           {...this.props.goodsDetailModal}
-        />
-
-        <GoodsGridList
-          {...this.props.goodsList}
-          {...this.props.gridActions}
         />
       </div>
     );
@@ -41,5 +40,5 @@ export default connect(
   dispatch => ({
     modalActions: bindActionCreators(detailModalActions, dispatch),
     gridActions: bindActionCreators(gridListActions, dispatch),
-  })
+  }),
 )(Home);

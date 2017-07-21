@@ -1,27 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AppBar from '../components/AppBar';
 import BottomNavigation from '../components/BottomNavigation';
-import Drawer from '../components/Drawer';
 
-import "./Frame.css"
+import './Frame.css';
 
-class Frame extends Component {
-  render() {
-    return (
-      <div className="Frame-container">
-        <div className="Frame-top-menu">
-          <AppBar />
-          <Drawer />
-        </div>
-        <div className="Frame-content-container">
-          {this.props.children}
-        </div>
-        <div className="Frame-bottom-menu">
-          <BottomNavigation />
-        </div>
+function Frame(props) {
+  return (
+    <div className="Frame-container">
+      <div className="Frame-top-menu">
+        <AppBar />
       </div>
-    );
-  }
+      <div className="Frame-content-container">
+        {props.children}
+      </div>
+      <div className="Frame-bottom-menu">
+        <BottomNavigation />
+      </div>
+    </div>
+  );
 }
+
+Frame.defaultProps = {
+  children: '',
+};
+
+Frame.propTypes = {
+  children: PropTypes.node,
+};
 
 export default Frame;

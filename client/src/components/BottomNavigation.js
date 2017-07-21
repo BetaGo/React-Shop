@@ -1,57 +1,84 @@
-import React, {Component} from 'react';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
-import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
-import IconExplore from 'material-ui/svg-icons/action/explore';
-import IconPerson from 'material-ui/svg-icons/social/person';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles, createStyleSheet } from 'material-ui/styles';
+import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
+import IconShoppingCart from 'material-ui-icons/ShoppingCart';
+import IconExplore from 'material-ui-icons/Explore';
+import IconPerson from 'material-ui-icons/Person';
+import { NavLink } from 'react-router-dom';
 
 const shoppingCartIcon = <IconShoppingCart />;
 const goodsListIcon = <IconExplore />;
-const myBillIcon = <IconPerson />;
+const myOrderIcon = <IconPerson />;
 
-/**
- * A simple example of `BottomNavigation`, with three labels and icons
- * provided. The selected `BottomNavigationItem` is determined by application
- * state (for instance, by the URL).
- */
+const styleSheet = createStyleSheet('BottomNavigationSimple', {
+  root: {
+    width: '100%',
+  },
+  link: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    outline: 'none',
+  },
+});
 
 class BottomNavigationSimple extends Component {
+
   state = {
-    selectedIndex: 0,
+    value: 0,
   };
 
-  select = (index) => this.setState({selectedIndex: index});
+  handleChange = (event, value) => {
+    this.setState({ value });
+  }
 
   render() {
+    const classes = this.props.classes;
+    const { value } = this.state;
     return (
-      <Paper zDepth={1}>
-        <BottomNavigation selectedIndex={this.state.selectedIndex}>
-            <BottomNavigationItem
-              label="商品列表"
-              icon={goodsListIcon}
-              onTouchTap={() => this.select(0)}
-              containerElement={<Link to="/goods-list"/>}
-            />
+      <div className={classes.root}>
+        <BottomNavigation value={value} onChange={this.handleChange} showLabels>
 
-            <BottomNavigationItem
-              label="购物车"
-              icon={shoppingCartIcon}
-              onTouchTap={() => this.select(1)}
-              containerElement={<Link to="/shopping-cart"/>}
-            />
-
-            <BottomNavigationItem
-            label="我的订单"
-            icon={myBillIcon}
-            onTouchTap={() => this.select(2)}
-            containerElement={<Link to="/my-order"/>}
+          <BottomNavigationButton
+            label={
+              <span>
+                商品列表
+                <NavLink className={classes.link} to="/goods-list" />
+              </span>
+            }
+            icon={goodsListIcon}
           />
 
+          <BottomNavigationButton
+            label={
+              <span>
+                购物车
+                <NavLink className={classes.link} to="/shopping-cart" />
+              </span>
+            }
+            icon={shoppingCartIcon}
+          />
+
+          <BottomNavigationButton
+            label={
+              <span>
+                我的订单
+                <NavLink className={classes.link} to="/my-order" />
+              </span>
+            }
+            icon={myOrderIcon}
+          />
         </BottomNavigation>
-      </Paper>
+      </div>
     );
   }
 }
 
-export default BottomNavigationSimple;
+BottomNavigationSimple.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styleSheet)(BottomNavigationSimple);
