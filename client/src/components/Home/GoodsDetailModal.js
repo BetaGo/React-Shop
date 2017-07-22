@@ -21,31 +21,11 @@ const styleSheet = createStyleSheet('GoodsDetailModal', {
     height: 'calc(100vw * 0.75)',
   },
   content: {
-    padding: '2em',
+    padding: '0 2em',
   },
 });
 
 class GoodsDetailModal extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      carouselWidth: 0,
-    };
-  }
-
-  static carouselContainerElement = null;
-
-  componentDidMount() {
-    console.log('did mount');
-    console.log(this.carouselContainerElement);
-    // if (this.carouselContainerElement != null) {
-    //   const width = this.carouselContainerElement.offsetWidth;
-    //   this.setState({
-    //     carouselWidth: width,
-    //   });
-    // }
-  }
 
   render() {
     const classes = this.props.classes;
@@ -68,12 +48,9 @@ class GoodsDetailModal extends Component {
         >
           <div
             className={classes.carousel}
-            ref={(ref) => { this.carouselContainerElement = ref; }}
           >
             <Carousel
               images={images}
-              width={this.state.carouselWidth}
-              height={this.state.carouselWidth * 0.75}
             />
           </div>
           <div className={classes.content}>
@@ -123,12 +100,12 @@ class GoodsDetailModal extends Component {
 
 GoodsDetailModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  visible: PropTypes.bool.isRequired,
-  images: PropTypes.array.isRequired,
-  name: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
-  remain: PropTypes.number.isRequired,
-  numberOfGoods: PropTypes.number.isRequired,
+  visible: PropTypes.bool,
+  images: PropTypes.array,
+  name: PropTypes.string,
+  desc: PropTypes.string,
+  remain: PropTypes.number,
+  numberOfGoods: PropTypes.number,
 
   reduceNumberOfGoods: PropTypes.func.isRequired,
   setNumber: PropTypes.func.isRequired,
@@ -136,6 +113,16 @@ GoodsDetailModal.propTypes = {
   hideModal: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
   buyNow: PropTypes.func.isRequired,
+};
+
+GoodsDetailModal.defaultProps = {
+  classes: PropTypes.object.isRequired,
+  visible: true,
+  images: [],
+  name: ' ',
+  desc: ' ',
+  remain: 1,
+  numberOfGoods: 1,
 };
 
 export default withStyles(styleSheet)(GoodsDetailModal);

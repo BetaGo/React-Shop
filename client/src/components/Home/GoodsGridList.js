@@ -82,6 +82,14 @@ class GoodsGridList extends Component {
       );
     }
 
+    if (this.props.error) {
+      return (
+        <div onTouchTap={this.props.loadGoodsList}>
+          出错了。点击重试。
+        </div>
+      );
+    }
+
     const goodsList = this.props.goodsList;
     const { showGoodsDetail } = this.props;
 
@@ -154,10 +162,12 @@ GoodsGridList.propTypes = {
   showGoodsDetail: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
   loading: PropTypes.bool,
+  error: PropTypes.bool,
 };
 
 GoodsGridList.defaultProps = {
   loading: true,
+  error: false,
 };
 
 export default withStyles(styleSheet)(GoodsGridList);

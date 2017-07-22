@@ -19,8 +19,8 @@ class Carousel extends Component {
   }
 
   static defaultProps = {
-    height: 480,
-    width: 640,
+    height: '100%',
+    width: '100%',
   }
 
   constructor(props) {
@@ -43,7 +43,24 @@ class Carousel extends Component {
     this.touchStartX = null;
     this.touchStartY = null;
     this.touchStartTime = null;
+    this.carouselElement = null;
   }
+
+  componentDidMount() {
+    const width = this.state.width;
+    const height = this.state.height;
+    const re = /^\d+%$/;
+
+    if (re.test(width) && re.test(height)) {
+      if (this.carouselElement !== null) {
+        this.setState({
+          width: this.carouselElement.offsetWidth,
+          height: this.carouselElement.offsetHeight,
+        });
+      }
+    }
+  }
+
 
   onNodeTouchStart(e) {
     this.touchStartX = e.touches[0].pageX;
@@ -52,12 +69,6 @@ class Carousel extends Component {
   }
 
   onNodeTouchMove(e) {
-    if (this.state.activeIndex === this.props.images.length - 1 ||
-      this.state.activeIndex === 0
-    ) {
-      return;
-    }
-
     const currentX = e.touches[0].pageX;
     const currentY = e.touches[0].pageY;
     const dX = currentX - this.touchStartX;
@@ -66,6 +77,13 @@ class Carousel extends Component {
     if (Math.abs(dX) < 10 ||
       (Math.abs(dX) < Math.abs(dY))
     ) {
+      return;
+    }
+
+    if (dX < 0 && this.state.activeIndex === this.props.images.length - 1) {
+      return;
+    }
+    if (dX > 0 && this.state.activeIndex === 0) {
       return;
     }
 
@@ -152,6 +170,7 @@ class Carousel extends Component {
         onTouchStart={this.onNodeTouchStart}
         onTouchMove={this.onNodeTouchMove}
         onTouchEnd={this.onNodeTouchEnd}
+        ref={(el) => { this.carouselElement = el; }}
       >
         {
           images.map((image, index) => (
