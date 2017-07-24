@@ -4,10 +4,17 @@ const initialState = {
 };
 
 export function setNumberOfGoods(e) {
+  const receivedValue = e.target.value;
+  let numberOfGoods = null;
+  try {
+    numberOfGoods = parseInt(receivedValue, 10);
+  } catch (err) {
+    console.log(err.message);
+  }
   return {
     type: 'SET_NUMBER_OF_GOODS',
     payload: {
-      numberOfGoods: e.target.value,
+      numberOfGoods: numberOfGoods || 0,
     },
   };
 }
@@ -85,6 +92,13 @@ export default function goodsDetail(state = initialState, action) {
       return {
         ...state,
         visible: false,
+      };
+    }
+
+    case 'SET_NUMBER_OF_GOODS': {
+      return {
+        ...state,
+        numberOfGoods: action.payload.numberOfGoods,
       };
     }
 

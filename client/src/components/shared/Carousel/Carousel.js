@@ -94,19 +94,11 @@ class Carousel extends Component {
 
   onNodeTouchEnd(e) {
     const currentX = e.changedTouches[0].pageX;
-    const currentY = e.changedTouches[0].pageY;
     const currentTime = Date.now();
     const dX = currentX - this.touchStartX;
-    const dY = currentY - this.touchStartY;
     const dT = currentTime - this.touchStartTime;
 
     const width = this.state.width;
-
-    if (Math.abs(dX) < 10 ||
-      (Math.abs(dX) < Math.abs(dY))
-    ) {
-      return;
-    }
 
     if (Math.abs(dX) > width / 2 || dT < 800) {
       if (dX > 0 &&

@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import AddShoppingCart from 'material-ui-icons/AddShoppingCart';
 
-const styleSheet = createStyleSheet('NowPlayingCard', {
+const styleSheet = createStyleSheet('GoodsGridList', {
   card: {
     display: 'flex',
     margin: '3px',
@@ -126,32 +126,6 @@ class GoodsGridList extends Component {
         }
       </div>
     );
-
-//     return (
-//       <div style={styles.root}>
-//         <GridList
-//           cellHeight={180}
-//           style={styles.gridList}
-//         >
-//         {goodsList.map((goods, index) => (
-//           <GridTile
-//             key={goods._id}
-//             title={goods.name}
-//             subtitle={<span>￥<b>{goods.price}</b></span>}
-//             actionIcon={
-//               <AddShoppingCart
-//                 onTouchTap={this.props.addToShoppingCart}
-//                 color="white"
-//                />
-//               }
-//             onTouchTap={this.props.showGoodsDetail.bind(null, index)}
-//           >
-//             <img src={goods.cover} alt={goods.name}/>
-//           </GridTile>
-//         ))}
-//         </GridList>
-//       </div>
-//     );
   }
 }
 

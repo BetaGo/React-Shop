@@ -1,102 +1,108 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
+import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 
 import AddShoppingCartIcon from 'material-ui-icons/AddShoppingCart';
 import CreditCardIcon from 'material-ui-icons/CreditCard';
 import ExploreIcon from 'material-ui-icons/Explore';
-import RemoveCircleIcon from 'material-ui-icons/RemoveCircle';
-import AddCircleIcon from 'material-ui-icons/AddCircle';
 
 import Carousel from '../shared/Carousel/Carousel';
+import QuantityWrapper from '../shared/QuantityWrapper/QuantityWrapper';
 
 const styleSheet = createStyleSheet('GoodsDetailModal', {
   carousel: {
     width: '100vw',
     height: 'calc(100vw * 0.75)',
+    margin: '-24px -24px 0',
   },
   content: {
     padding: '0 2em',
   },
+  numberActionContainer: {
+    display: 'flex',
+    maxWidth: '9em',
+  },
+  numberOfGoods: {
+    margin: 'auto',
+  },
 });
 
-class GoodsDetailModal extends Component {
+function GoodsDetailModal(props) {
+  const classes = props.classes;
+  const { visible, images, name, desc, remain, numberOfGoods } = props;
+  const {
+    reduceNumberOfGoods,
+    setNumberOfGoods,
+    addNumberOfGoods,
+    hideModal,
+    addToShoppingCart,
+    buyNow,
+    } = props;
 
-  render() {
-    const classes = this.props.classes;
-    const { visible, images, name, desc, remain, numberOfGoods } = this.props;
-    const {
-      reduceNumberOfGoods,
-      setNumber,
-      addNumberOfGoods,
-      hideModal,
-      addToShoppingCart,
-      buyNow,
-      } = this.props;
-
-    return (
-      <div>
-        <Dialog
-          fullScreen
-          open={visible}
-          transition={<Slide direction="up" />}
-        >
-          <div
-            className={classes.carousel}
-          >
-            <Carousel
-              images={images}
+  return (
+    <div>
+      <Dialog
+        fullScreen
+        open={visible}
+        transition={<Slide direction="up" />}
+        onTouchTap={e => e.stopPropagation()}
+      >
+        <DialogContent>
+          <div className={classes.carousel}>
+            <Carousel images={images} />
+          </div>
+          <h2>{name}</h2>
+          <p>{desc}</p>
+          <QuantityWrapper
+            value={numberOfGoods}
+            handleOnchange={setNumberOfGoods}
+            handleRemove={reduceNumberOfGoods}
+            handleAdd={addNumberOfGoods}
+          />
+          {/* <div className={classes.numberActionContainer}>
+            <IconButton
+              tooltip="reduce"
+              onTouchTap={reduceNumberOfGoods}
+            >
+              <RemoveCircleIcon />
+            </IconButton>
+            <TextField
+              name="numberOfGoods"
+              value={numberOfGoods}
+              onChange={setNumberOfGoods}
+              className={classes.numberOfGoods}
             />
-          </div>
-          <div className={classes.content}>
-            <h2>{name}</h2>
-            <p>{desc}</p>
-            <div>
-              <IconButton
-                tooltip="reduce"
-                onTouchTap={reduceNumberOfGoods}
-              >
-                <RemoveCircleIcon />
-              </IconButton>
-              <TextField
-                name="numberOfGoods"
-                value={numberOfGoods}
-                onChange={setNumber}
-                style={{ width: '3em' }}
-              />
-              <IconButton
-                tooltip="add"
-                onTouchTap={addNumberOfGoods}
-              >
-                <AddCircleIcon />
-              </IconButton>
-            </div>
-            <span>剩余数量： {remain}</span>
-            <div>
-              <Button onTouchTap={hideModal}>
-                <ExploreIcon />
-                看看别的
-              </Button>
-              <Button color="primary" onTouchTap={addToShoppingCart}>
-                <AddShoppingCartIcon />
-                加入购物车
-              </Button>
-              <Button color="accent" onTouchTap={buyNow}>
-                <CreditCardIcon />
-                立即购买
-              </Button>
-            </div>
-          </div>
-        </Dialog>
-      </div>
-    );
-  }
+            <IconButton
+              tooltip="add"
+              onTouchTap={addNumberOfGoods}
+            >
+              <AddCircleIcon />
+            </IconButton>
+          </div> */}
+          <span>剩余数量： {remain}</span>
+        </DialogContent>
+        <DialogActions>
+          <Button onTouchTap={hideModal}>
+            <ExploreIcon />
+            看看别的
+          </Button>
+          <Button color="primary" onTouchTap={addToShoppingCart}>
+            <AddShoppingCartIcon />
+            加入购物车
+          </Button>
+          <Button color="accent" onTouchTap={buyNow}>
+            <CreditCardIcon />
+            立即购买
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
+
 
 GoodsDetailModal.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -108,7 +114,7 @@ GoodsDetailModal.propTypes = {
   numberOfGoods: PropTypes.number,
 
   reduceNumberOfGoods: PropTypes.func.isRequired,
-  setNumber: PropTypes.func.isRequired,
+  setNumberOfGoods: PropTypes.func.isRequired,
   addNumberOfGoods: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
