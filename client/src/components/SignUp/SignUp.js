@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { NavLink } from 'react-router-dom';
 
 const styleSheet = createStyleSheet('SignUp', {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   form: {
     display: 'flex',
     flexDirection: 'column',
@@ -108,7 +113,7 @@ class SignUp extends Component {
     const classes = this.props.classes;
 
     return (
-      <div>
+      <div className={classes.root}>
         <form
           className={classes.form}
           onSubmit={this.handleSubmit}
@@ -156,5 +161,8 @@ class SignUp extends Component {
     );
   }
 }
+SignUp.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styleSheet)(SignUp);
