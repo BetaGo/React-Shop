@@ -13,7 +13,13 @@ const myOrderIcon = <IconPerson />;
 
 const styleSheet = createStyleSheet('BottomNavigationSimple', {
   root: {
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
     width: '100%',
+    willChange: 'transform',
+    transition: '0.2s ease',
+    zIndex: 1,
   },
   link: {
     position: 'absolute',

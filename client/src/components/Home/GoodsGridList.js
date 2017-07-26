@@ -33,12 +33,9 @@ const styleSheet = createStyleSheet('GoodsGridList', {
     paddingLeft: 8,
     paddingBottom: 8,
   },
-  playIcon: {
-    height: 38,
-    width: 38,
-  },
   responseImage: {
     width: '100%',
+    maxHeight: 180,
     margin: 'auto',
   },
   loadingContainer: {

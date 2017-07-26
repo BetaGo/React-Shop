@@ -10,7 +10,13 @@ import MenuIcon from 'material-ui-icons/Menu';
 
 const styleSheet = createStyleSheet('ButtonAppBar', {
   root: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
     width: '100%',
+    willChange: 'transform',
+    transition: '0.2s ease',
+    zIndex: 1,
   },
   flex: {
     flex: 1,

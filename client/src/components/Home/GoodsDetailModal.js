@@ -47,8 +47,7 @@ function GoodsDetailModal(props) {
       <Dialog
         fullScreen
         open={visible}
-        transition={<Slide direction="up" />}
-        onTouchTap={e => e.stopPropagation()}
+        transition={<Slide direction="down" />}
       >
         <DialogContent>
           <div className={classes.carousel}>
@@ -57,7 +56,7 @@ function GoodsDetailModal(props) {
           <h2>{name}</h2>
           <p>{desc}</p>
           <QuantityWrapper
-            value={numberOfGoods}
+            quantity={numberOfGoods}
             handleOnchange={setNumberOfGoods}
             handleRemove={reduceNumberOfGoods}
             handleAdd={addNumberOfGoods}

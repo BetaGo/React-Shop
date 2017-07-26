@@ -59,9 +59,9 @@ export function reduceNumberOfGoods() {
 export function addToShoppingCart() {
   // TODO:
   return (dispatch) => {
-    dispatch({ type: 'HIDE_MODAL' });
+    dispatch({ type: 'ADD_TO_SHOPPING_CART' });
     return dispatch({
-      type: 'ADD_TO_SHOPPING_CART',
+      type: 'HIDE_MODAL',
     });
   };
 }

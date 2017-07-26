@@ -7,16 +7,12 @@ import './Frame.css';
 
 function Frame(props) {
   return (
-    <div className="Frame-container">
-      <div className="Frame-top-menu">
-        <AppBar />
-      </div>
+    <div>
       <div className="Frame-content-container">
         {props.children}
       </div>
-      <div className="Frame-bottom-menu">
-        <BottomNavigation />
-      </div>
+      <AppBar />
+      <BottomNavigation />
     </div>
   );
 }

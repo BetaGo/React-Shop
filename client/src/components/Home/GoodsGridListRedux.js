@@ -31,8 +31,7 @@ export function loadGoodsList() {
   };
 }
 
-export function addToShoppingCart(e) {
-  e.stopPropagation();
+export function addToShoppingCart() {
   return {
     type: 'ADD_TO_SHOPPING_CART',
     payload: {
@@ -55,7 +54,10 @@ export function showGoodsDetail(index) {
       type: 'SET_SELECTED_INDEX',
       payload: index,
     });
-    return dispatch({
+    dispatch({
+      type: 'HIDDEN_BOTTOM_NAV',
+    });
+    dispatch({
       type: 'SHOW_MODAL',
     });
   };
