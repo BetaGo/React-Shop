@@ -41,7 +41,7 @@ function GoodsDetailModal(props) {
     reduceNumberOfGoods,
     setNumberOfGoods,
     addNumberOfGoods,
-    hideModal,
+    seeOthers,
     addToShoppingCart,
     buyNow,
     } = props;
@@ -88,7 +88,7 @@ function GoodsDetailModal(props) {
           <span>剩余数量： {remain}</span>
         </DialogContent>
         <DialogActions className={classes.actions}>
-          <Button onTouchTap={hideModal}>
+          <Button onTouchTap={seeOthers}>
             <ExploreIcon />
             看看别的
           </Button>
@@ -119,7 +119,7 @@ GoodsDetailModal.propTypes = {
   reduceNumberOfGoods: PropTypes.func.isRequired,
   setNumberOfGoods: PropTypes.func.isRequired,
   addNumberOfGoods: PropTypes.func.isRequired,
-  hideModal: PropTypes.func.isRequired,
+  seeOthers: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
   buyNow: PropTypes.func.isRequired,
 };

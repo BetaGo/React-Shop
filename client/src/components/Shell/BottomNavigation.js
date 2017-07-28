@@ -35,11 +35,47 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
   },
 });
 
+
 class BottomNavigationSimple extends Component {
 
   state = {
     value: 0,
   };
+
+
+  componentWillMount() {
+    const url = window.location.pathname;
+    const re = /^\/([A-Za-z0-9_-]+)\/*/;
+
+    const path = re.exec(url) ? re.exec(url)[1] : '';
+
+    switch (path) {
+      case 'goods-list': {
+        this.setState({
+          value: 0,
+        });
+        break;
+      }
+
+      case 'shopping-cart': {
+        this.setState({
+          value: 1,
+        });
+        break;
+      }
+
+      case 'my-order': {
+        this.setState({
+          value: 2,
+        });
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+
 
   handleChange = (event, value) => {
     this.setState({ value });

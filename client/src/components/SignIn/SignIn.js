@@ -11,6 +11,7 @@ const styleSheet = createStyleSheet('SignIn', {
   root: {
     display: 'flex',
     flexDirection: 'column',
+    margin: '60px 0',
   },
   center: {
     margin: 'auto',

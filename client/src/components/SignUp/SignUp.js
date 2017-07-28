@@ -9,6 +9,7 @@ const styleSheet = createStyleSheet('SignUp', {
   root: {
     display: 'flex',
     flexDirection: 'column',
+    margin: '60px 0',
   },
   form: {
     display: 'flex',

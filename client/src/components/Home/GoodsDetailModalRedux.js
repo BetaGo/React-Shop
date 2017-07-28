@@ -53,6 +53,18 @@ export function reduceNumberOfGoods() {
   };
 }
 
+export function seeOthers() {
+  return (dispatch) => {
+    dispatch({
+      type: 'HIDE_MODAL',
+    });
+
+    dispatch({
+      type: 'SHOW_BOTTOM_NAV',
+    });
+  };
+}
+
 
 export function addToShoppingCart() {
   // TODO:
