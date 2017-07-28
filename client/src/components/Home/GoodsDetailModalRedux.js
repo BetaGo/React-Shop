@@ -22,7 +22,6 @@ export function setNumberOfGoods(e) {
 
 export function showModal() {
   // TODO:
-  console.log('action: showModal');
   return {
     type: 'SHOW_MODAL',
   };
@@ -31,7 +30,6 @@ export function showModal() {
 
 export function hideModal() {
   // TODO:
-  console.log('action: hideModal');
   return {
     type: 'HIDE_MODAL',
   };
@@ -58,11 +56,19 @@ export function reduceNumberOfGoods() {
 
 export function addToShoppingCart() {
   // TODO:
+  /**
+   * 在商品详情页面点击添加到购物车按钮
+   * =>提交相关数据到服务器
+   * =>隐藏商品详情页 Modal
+   * =>显示底部BottomNavigation
+   */
   return (dispatch) => {
-    dispatch({ type: 'ADD_TO_SHOPPING_CART' });
-    return dispatch({
-      type: 'HIDE_MODAL',
+    dispatch({
+      type: 'ADD_TO_SHOPPING_CART',
+      payload: '',
     });
+    dispatch({ type: 'HIDE_MODAL' });
+    dispatch({ type: 'SHOW_BOTTOM_NAV' });
   };
 }
 

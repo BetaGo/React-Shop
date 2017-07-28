@@ -8,9 +8,12 @@ import Typography from 'material-ui/Typography';
 import AddShoppingCart from 'material-ui-icons/AddShoppingCart';
 
 const styleSheet = createStyleSheet('GoodsGridList', {
+  root: {
+    margin: '60px 0',
+  },
   card: {
     display: 'flex',
-    margin: '3px',
+    margin: 6,
     justifyContent: 'space-around',
     maxHeight: 180,
   },
@@ -91,7 +94,7 @@ class GoodsGridList extends Component {
     const { showGoodsDetail } = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         {
           goodsList.map((goods, index) => (
             <Card

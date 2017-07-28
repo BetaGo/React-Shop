@@ -4,9 +4,9 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
+import SearchIcon from 'material-ui-icons/Search';
 
 const styleSheet = createStyleSheet('ButtonAppBar', {
   root: {
@@ -25,17 +25,28 @@ const styleSheet = createStyleSheet('ButtonAppBar', {
 
 function ButtonAppBar(props) {
   const classes = props.classes;
+  const { title, handleMenu, handleSearch } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton color="contrast" aria-label="Menu">
+          <IconButton
+            color="contrast"
+            aria-label="Menu"
+            onTouchTap={handleMenu}
+          >
             <MenuIcon />
           </IconButton>
           <Typography type="title" color="inherit" className={classes.flex}>
-            Title
+            {title}
           </Typography>
-          <Button color="contrast">Login</Button>
+          <IconButton
+            color="contrast"
+            aria-label="Search"
+            onTouchTap={handleSearch}
+          >
+            <SearchIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>
@@ -44,6 +55,9 @@ function ButtonAppBar(props) {
 
 ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  handleMenu: PropTypes.func.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(ButtonAppBar);

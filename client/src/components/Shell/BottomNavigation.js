@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
 import IconShoppingCart from 'material-ui-icons/ShoppingCart';
@@ -18,7 +19,7 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
     bottom: 0,
     width: '100%',
     willChange: 'transform',
-    transition: '0.2s ease',
+    transition: '0.2s ease-out',
     zIndex: 1,
   },
   link: {
@@ -28,6 +29,9 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
     bottom: 0,
     left: 0,
     outline: 'none',
+  },
+  hidden: {
+    transform: 'translateY(80px)',
   },
 });
 
@@ -43,9 +47,17 @@ class BottomNavigationSimple extends Component {
 
   render() {
     const classes = this.props.classes;
+    const { hidden } = this.props;
     const { value } = this.state;
     return (
-      <div className={classes.root}>
+      <div
+        className={classNames(
+          classes.root,
+          {
+            [classes.hidden]: hidden,
+          },
+        )}
+      >
         <BottomNavigation value={value} onChange={this.handleChange} showLabels>
 
           <BottomNavigationButton
@@ -85,6 +97,7 @@ class BottomNavigationSimple extends Component {
 
 BottomNavigationSimple.propTypes = {
   classes: PropTypes.object.isRequired,
+  hidden: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styleSheet)(BottomNavigationSimple);

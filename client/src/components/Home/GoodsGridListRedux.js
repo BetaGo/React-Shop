@@ -31,12 +31,27 @@ export function loadGoodsList() {
   };
 }
 
-export function addToShoppingCart() {
-  return {
-    type: 'ADD_TO_SHOPPING_CART',
-    payload: {
-      // TODO:
-    },
+export function addToShoppingCart(e) {
+  /**
+   * 点击商品卡片上的 添加到购物车ICON:
+   * =>提交信息到服务器
+   * =>显示顶部AppBar
+   * =>显示底部BottomNavigation
+   */
+  e.stopPropagation();
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_TO_SHOPPING_CART',
+      payload: {
+        // TODO:
+      },
+    });
+    dispatch({
+      type: 'SHOW_BOTTOM_NAV',
+    });
+    dispatch({
+      type: 'SHOW_APP_BAR',
+    });
   };
 }
 
@@ -55,7 +70,7 @@ export function showGoodsDetail(index) {
       payload: index,
     });
     dispatch({
-      type: 'HIDDEN_BOTTOM_NAV',
+      type: 'HIDE_BOTTOM_NAV',
     });
     dispatch({
       type: 'SHOW_MODAL',

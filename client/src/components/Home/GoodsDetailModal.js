@@ -28,6 +28,10 @@ const styleSheet = createStyleSheet('GoodsDetailModal', {
   numberOfGoods: {
     margin: 'auto',
   },
+  actions: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
 });
 
 function GoodsDetailModal(props) {
@@ -83,7 +87,7 @@ function GoodsDetailModal(props) {
           </div> */}
           <span>剩余数量： {remain}</span>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className={classes.actions}>
           <Button onTouchTap={hideModal}>
             <ExploreIcon />
             看看别的
