@@ -14,7 +14,7 @@ export function loadGoodsList() {
   */
   return (dispatch) => {
     dispatch({ type: 'LOAD_GOODS_LIST' });
-    return fetch('/api/goods/goods-list')
+    return fetch('/api/goods/')
       .then(response => response.json())
       .then((json) => {
         dispatch({

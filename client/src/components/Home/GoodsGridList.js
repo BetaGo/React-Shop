@@ -7,6 +7,8 @@ import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import AddShoppingCart from 'material-ui-icons/AddShoppingCart';
 
+import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
+
 const styleSheet = createStyleSheet('GoodsGridList', {
   root: {
     margin: '60px 0',
@@ -41,17 +43,6 @@ const styleSheet = createStyleSheet('GoodsGridList', {
     maxHeight: 180,
     margin: 'auto',
   },
-  loadingContainer: {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    display: 'flex',
-  },
-  loading: {
-    margin: 'auto',
-  },
 });
 
 // const styles = {
@@ -75,11 +66,7 @@ class GoodsGridList extends Component {
   render() {
     const classes = this.props.classes;
     if (this.props.loading) {
-      return (
-        <div className={classes.loadingContainer}>
-          <CircularProgress className={classes.loading} size={50} />
-        </div>
-      );
+      return <LoadingCircle />;
     }
 
     if (this.props.error) {
@@ -99,7 +86,7 @@ class GoodsGridList extends Component {
           goodsList.map((goods, index) => (
             <Card
               className={classes.card}
-              key={goods._id}
+              key={goods.commodity_id}
               onTouchTap={() => showGoodsDetail(index)}
             >
               <div className={classes.details}>

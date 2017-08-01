@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Badge from 'material-ui/Badge';
 import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
 import IconShoppingCart from 'material-ui-icons/ShoppingCart';
 import IconExplore from 'material-ui-icons/Explore';
 import IconPerson from 'material-ui-icons/Person';
 import { NavLink } from 'react-router-dom';
 
-const shoppingCartIcon = <IconShoppingCart />;
-const goodsListIcon = <IconExplore />;
-const myOrderIcon = <IconPerson />;
 
 const styleSheet = createStyleSheet('BottomNavigationSimple', {
   root: {
@@ -85,6 +83,20 @@ class BottomNavigationSimple extends Component {
     const classes = this.props.classes;
     const { hidden } = this.props;
     const { value } = this.state;
+
+    const shoppingCartIcon = (
+      <div>
+        <Badge
+          badgeContent={10}
+          color="accent"
+        >
+          <IconShoppingCart />
+        </Badge>
+      </div>
+    );
+    const goodsListIcon = <IconExplore />;
+    const myOrderIcon = <IconPerson />;
+
     return (
       <div
         className={classNames(
