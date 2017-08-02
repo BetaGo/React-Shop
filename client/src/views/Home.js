@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -28,6 +29,13 @@ function Home(props) {
     </div>
   );
 }
+
+Home.propTypes = {
+  goodsList: PropTypes.array.isRequired,
+  goodsDetailModal: PropTypes.object.isRequired,
+  gridActions: PropTypes.object.isRequired,
+  modalActions: PropTypes.object.isRequired,
+};
 
 
 export default connect(

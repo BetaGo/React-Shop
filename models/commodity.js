@@ -17,7 +17,7 @@ commoditySchema.statics.findByName = function(name, cb) {
   return this.find({ name: new RegExp(name, 'i') }, cb);
 }
 
-commoditySchema.statics.findById = function(id, cb) {
+commoditySchema.statics.findByCommodityId = function(id, cb) {
   return this.find({ commodity_id: id }, cb);
 }
 
