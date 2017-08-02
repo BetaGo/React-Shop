@@ -1,23 +1,6 @@
 const initialState = {
-  numberOfGoods: 1,
   visible: false,
 };
-
-export function setNumberOfGoods(e) {
-  const receivedValue = e.target.value;
-  let numberOfGoods = null;
-  try {
-    numberOfGoods = parseInt(receivedValue, 10);
-  } catch (err) {
-    console.log(err.message);
-  }
-  return {
-    type: 'SET_NUMBER_OF_GOODS',
-    payload: {
-      numberOfGoods: numberOfGoods || 0,
-    },
-  };
-}
 
 
 export function showModal() {
@@ -35,25 +18,8 @@ export function hideModal() {
   };
 }
 
-
-export function addNumberOfGoods() {
-  // TODO:
-  console.log('action: addNumberOfGoods');
-  return {
-    type: 'ADD_NUMBER_OF_GOODS',
-  };
-}
-
-
-export function reduceNumberOfGoods() {
-  // TODO:
-  console.log('action: reduceNumber');
-  return {
-    type: 'REDUCE_NUMBER_OF_GOODS',
-  };
-}
-
-export function seeOthers() {
+export function seeOthers(e) {
+  e.preventDefault();
   return (dispatch) => {
     dispatch({
       type: 'HIDE_MODAL',
@@ -66,7 +32,7 @@ export function seeOthers() {
 }
 
 
-export function addToShoppingCart() {
+export function addToShoppingCart(e) {
   // TODO:
   /**
    * 在商品详情页面点击添加到购物车按钮
@@ -74,6 +40,7 @@ export function addToShoppingCart() {
    * =>隐藏商品详情页 Modal
    * =>显示底部BottomNavigation
    */
+  e.preventDefault();
   return (dispatch) => {
     dispatch({
       type: 'ADD_TO_SHOPPING_CART',
@@ -85,8 +52,9 @@ export function addToShoppingCart() {
 }
 
 
-export function buyNow() {
+export function buyNow(e) {
   // TODO:
+  e.preventDefault();
   return (dispatch) => {
     dispatch({ type: 'HIDE_MODAL' });
     return dispatch({

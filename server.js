@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const db = require('./mongodb/db'); // 连接到mongodb
-// const addCommodity = require('./mock/addCommodity'); // 添加 mock 数据到数据库
 const api = require('./routers/api');
 
 const app = express();

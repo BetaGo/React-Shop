@@ -86,7 +86,7 @@ class GoodsGridList extends Component {
           goodsList.map((goods, index) => (
             <Card
               className={classes.card}
-              key={goods.commodity_id}
+              key={`commodity-${goods.commodity_id}`}
               onTouchTap={() => showGoodsDetail(index)}
             >
               <div className={classes.details}>

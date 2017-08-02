@@ -25,9 +25,9 @@ router.get('/cart', function (req, res, next) {
 
 // 用户向购物车添加商品，或修改购物车内容
 router.post('/cart', function(req, res, next) {
-  const userId = req.userId;
-  Cart.find()
-
+  const user_id = req.userId;
+  const commodity_id = req.commodityId
+  // TODO:
 });
 
 module.exports = router;

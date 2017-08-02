@@ -1,5 +1,40 @@
 const Commodity = require('../models/commodity');
 
+function mockCommodity(num) {
+  let i = 0;
+  let arr = [];
+  let types = ['吃','喝','玩','乐'];
+  let typeIndex;
+  while (i < num) {
+    type = types[Math.floor(Math.random() * 4)];
+    arr[i] = new Commodity({
+      "commodity_id": i,
+      "name":  `商品${i}`,
+      "type": type,
+      "desc": `商品${i}的简介，种类： ${type}`,
+      "cover": "http://placeimg.com/640/480/any",
+      "images": [
+        "http://placeimg.com/640/480/any",
+        "http://placeimg.com/640/480/animals",
+        "http://placeimg.com/640/480/arch",
+        "http://placeimg.com/640/480/people"
+      ],
+      "price": parseFloat((Math.random() * 1000).toFixed(2)),
+      "remain": Math.round(Math.random() * 200),
+    });
+    arr[i].save(function(err, commodity) {
+      if (err) {
+        console.log(`错误： ${err}`);
+      }
+      console.log(`添加 ${commodity.name} 成功！`);
+    });
+    i++;
+  }
+}
+
+module.exports = mockCommodity;
+
+/*
 let someGoods0 = new Commodity({
   "commodity_id": 1,
   "name": "Bird - Cloud",
@@ -79,3 +114,6 @@ let someGoods4 = new Commodity({
   "remain": 1,
 });
 someGoods4.save();
+
+*/
+

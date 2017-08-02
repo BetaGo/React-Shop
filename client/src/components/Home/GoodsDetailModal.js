@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Button from 'material-ui/Button';
@@ -34,76 +34,118 @@ const styleSheet = createStyleSheet('GoodsDetailModal', {
   },
 });
 
-function GoodsDetailModal(props) {
-  const classes = props.classes;
-  const { visible, images, name, desc, remain, numberOfGoods } = props;
-  const {
-    reduceNumberOfGoods,
-    setNumberOfGoods,
-    addNumberOfGoods,
-    seeOthers,
-    addToShoppingCart,
-    buyNow,
-    } = props;
+class GoodsDetailModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantity: 1,
+    };
 
-  return (
-    <div>
-      <Dialog
-        fullScreen
-        open={visible}
-        transition={<Slide direction="down" />}
-      >
-        <DialogContent>
-          <div className={classes.carousel}>
-            <Carousel images={images} />
-          </div>
-          <h2>{name}</h2>
-          <p>{desc}</p>
-          <QuantityWrapper
-            quantity={numberOfGoods}
-            handleOnchange={setNumberOfGoods}
-            handleRemove={reduceNumberOfGoods}
-            handleAdd={addNumberOfGoods}
-          />
-          {/* <div className={classes.numberActionContainer}>
-            <IconButton
-              tooltip="reduce"
-              onTouchTap={reduceNumberOfGoods}
-            >
-              <RemoveCircleIcon />
-            </IconButton>
-            <TextField
-              name="numberOfGoods"
-              value={numberOfGoods}
-              onChange={setNumberOfGoods}
-              className={classes.numberOfGoods}
+    this.addNumberOfGoods = this.addNumberOfGoods.bind(this);
+    this.reduceNumberOfGoods = this.reduceNumberOfGoods.bind(this);
+    this.inputNumberOfGoods = this.inputNumberOfGoods.bind(this);
+  }
+
+  addNumberOfGoods(e) {
+    // TODO: 与服务器通讯，检查商品数量是否充足
+    e.preventDefault();
+    this.setState({
+      quantity: this.state.quantity + 1,
+    });
+  }
+
+  reduceNumberOfGoods(e) {
+    e.preventDefault();
+    if (this.state.quantity > 1) {
+      this.setState({
+        quantity: this.state.quantity - 1,
+      });
+    }
+  }
+
+  inputNumberOfGoods(e) {
+    // TODO: 与服务器通讯，检查商品数量是否充足
+    const receivedValue = e.target.value;
+    let quantity = null;
+    try {
+      quantity = parseInt(receivedValue, 10);
+    } catch (err) {
+      console.log(err.message);
+    }
+    this.setState({
+      quantity: quantity || 0,
+    });
+  }
+
+  render() {
+    const { quantity } = this.state;
+    const classes = this.props.classes;
+    const { visible, images, name, desc, remain } = this.props;
+    const {
+      seeOthers,
+      addToShoppingCart,
+      buyNow,
+      } = this.props;
+    return (
+      <div>
+        <Dialog
+          fullScreen
+          open={visible}
+          transition={<Slide direction="down" />}
+        >
+          <DialogContent>
+            <div className={classes.carousel}>
+              <Carousel images={images} />
+            </div>
+            <h2>{name}</h2>
+            <p>{desc}</p>
+            <QuantityWrapper
+              quantity={quantity}
+              handleOnchange={this.inputNumberOfGoods}
+              handleRemove={this.reduceNumberOfGoods}
+              handleAdd={this.addNumberOfGoods}
             />
-            <IconButton
-              tooltip="add"
-              onTouchTap={addNumberOfGoods}
-            >
-              <AddCircleIcon />
-            </IconButton>
-          </div> */}
-          <span>剩余数量： {remain}</span>
-        </DialogContent>
-        <DialogActions className={classes.actions}>
-          <Button onTouchTap={seeOthers}>
-            <ExploreIcon />
-            看看别的
-          </Button>
-          <Button color="primary" onTouchTap={addToShoppingCart}>
-            <AddShoppingCartIcon />
-            加入购物车
-          </Button>
-          <Button color="accent" onTouchTap={buyNow}>
-            <CreditCardIcon />
-            立即购买
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
+            {/* <div className={classes.numberActionContainer}>
+              <IconButton
+                tooltip="reduce"
+                onTouchTap={reduceNumberOfGoods}
+              >
+                <RemoveCircleIcon />
+              </IconButton>
+              <TextField
+                name="numberOfGoods"
+                value={numberOfGoods}
+                onChange={setNumberOfGoods}
+                className={classes.numberOfGoods}
+              />
+              <IconButton
+                tooltip="add"
+                onTouchTap={addNumberOfGoods}
+              >
+                <AddCircleIcon />
+              </IconButton>
+            </div> */}
+            <span>剩余数量： {remain}</span>
+          </DialogContent>
+          <DialogActions className={classes.actions}>
+            <Button onTouchTap={seeOthers}>
+              <ExploreIcon />
+              看看别的
+            </Button>
+            <Button color="primary" onTouchTap={addToShoppingCart}>
+              <AddShoppingCartIcon />
+              加入购物车
+            </Button>
+            <Button color="accent" onTouchTap={buyNow}>
+              <CreditCardIcon />
+              立即购买
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+
 }
 
 
@@ -114,11 +156,7 @@ GoodsDetailModal.propTypes = {
   name: PropTypes.string,
   desc: PropTypes.string,
   remain: PropTypes.number,
-  numberOfGoods: PropTypes.number,
 
-  reduceNumberOfGoods: PropTypes.func.isRequired,
-  setNumberOfGoods: PropTypes.func.isRequired,
-  addNumberOfGoods: PropTypes.func.isRequired,
   seeOthers: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
   buyNow: PropTypes.func.isRequired,
@@ -131,7 +169,6 @@ GoodsDetailModal.defaultProps = {
   name: ' ',
   desc: ' ',
   remain: 1,
-  numberOfGoods: 1,
 };
 
 export default withStyles(styleSheet)(GoodsDetailModal);
