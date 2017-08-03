@@ -25,28 +25,27 @@ router.get('/cart', function (req, res, next) {
     }
     console.log(cart.goods);
     if (cart && cart.goods) {
-      for (commodity of cart.goods) {
-        const quantity = commodity.quantity;
-        Commodity.findOne({ commodity_id: commodity.commodity_id }, function(err, commodity) {
-          if (err) {
-            console.log(err);
-          }
-          // console.log(`commodity: ${commodity}`);
-          const cartCommodity = Object.assign(commodity,{"quantity":quantity});
-          console.log(cartCommodity.quantity);
-          commodities.push(cartCommodity);
-          // console.log(commodities.length);
-        }).exec(function(){
-          console.log(commodities[0].quantity);
-          console.log(commodities[0]);
-          // TODO: bug!!
-          res.json(commodities);
-        });
+      async function loopArray() {
+        for (commodity of cart.goods) {
+          const quantity = commodity.quantity;
+          await Commodity.findOne({ commodity_id: commodity.commodity_id }, function(err, commodity) {
+            if (err) {
+              console.log(err);
+            }
+            // console.log(`commodity: ${commodity}`);
+            commodity = JSON.parse(JSON.stringify(commodity)); // 貌似查询返回的对象没有 setter，所以浅复制一下。
+            const cartCommodity = Object.assign(commodity, { quantity: quantity });
+            // console.log(`cartCommodity: ${cartCommodity}`);
+            // console.log(`cartCommodity.quantity: ${cartCommodity.quantity}`);
+            commodities.push(cartCommodity);
+            // console.log(commodities.length);
+          });
+        }
+        res.json(commodities);
       }
-    } else {
-      res.json([]);
+      loopArray();
     }
-  });
+  })
 });
 
 // 用户向购物车添加商品，或修改购物车内容
