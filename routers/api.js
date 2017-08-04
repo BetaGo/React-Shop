@@ -139,7 +139,10 @@ router.post('/cart', function (req, res, next) {
     // });
   } else {
     res.json({
-      success: 0
+      success: 0,
+      user_id: user_id,
+      commodity_id: commodity_id,
+      quantity: quantity,
     });
   }
 });

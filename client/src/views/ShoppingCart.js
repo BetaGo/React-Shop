@@ -1,22 +1,31 @@
 import React from 'react';
-import CartCard from '../components/ShoppingCart/CartCard';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import shoppingCartList from '../api/shoppingCartList.json';
+import CartCardList from '../components/ShoppingCart/CartCardList';
+
+// Action
+import * as cartCardListActions from '../components/ShoppingCart/CartCardListRedux';
 
 function ShoppingCart(props) {
-  const list = shoppingCartList;
-
-  console.log(`List: ${list}`);
-
   return (
     <div>
-      {
-        list.map(value => (
-          <CartCard {...value} />
-        ))
-      }
+      <CartCardList {...props.cartCardList} {...props.cartCardListActions} />
     </div>
   );
 }
 
-export default ShoppingCart;
+ShoppingCart.propTypes = {
+  cartCardList: PropTypes.object.isRequired,
+};
+
+export default connect(
+  state => ({
+    cartCardList: state.shoppingCart.cartCardList,
+  }),
+  dispatch => ({
+    cartCardListActions: bindActionCreators(cartCardListActions, dispatch),
+  }),
+)(ShoppingCart);
+

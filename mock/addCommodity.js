@@ -1,11 +1,11 @@
 const Commodity = require('../models/commodity');
 
 function mockCommodity(num) {
-  let i = 0;
+  let i = 1;
   let arr = [];
   let types = ['吃','喝','玩','乐'];
   let typeIndex;
-  while (i < num) {
+  while (i <= num) {
     type = types[Math.floor(Math.random() * 4)];
     arr[i] = new Commodity({
       "commodity_id": i,

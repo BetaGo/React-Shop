@@ -31,7 +31,7 @@ function Home(props) {
 }
 
 Home.propTypes = {
-  goodsList: PropTypes.array.isRequired,
+  goodsList: PropTypes.object.isRequired,
   goodsDetailModal: PropTypes.object.isRequired,
   gridActions: PropTypes.object.isRequired,
   modalActions: PropTypes.object.isRequired,

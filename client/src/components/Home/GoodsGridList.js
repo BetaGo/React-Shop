@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import { CircularProgress } from 'material-ui/Progress';
 import Card, { CardContent } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
@@ -78,7 +77,7 @@ class GoodsGridList extends Component {
     }
 
     const goodsList = this.props.goodsList;
-    const { showGoodsDetail } = this.props;
+    const { showGoodsDetail, addToShoppingCart } = this.props;
 
     return (
       <div className={classes.root}>
@@ -99,7 +98,7 @@ class GoodsGridList extends Component {
                 <div className={classes.controls}>
                   <IconButton
                     aria-label="addToShoppingCart"
-                    onTouchTap={this.props.addToShoppingCart}
+                    onTouchTap={e => addToShoppingCart(e, goods.commodity_id)}
                   >
                     <AddShoppingCart />
                   </IconButton>
