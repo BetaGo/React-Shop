@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
@@ -55,64 +55,56 @@ const styleSheet = createStyleSheet('GoodsGridList', {
 //   },
 // };
 
-class GoodsGridList extends Component {
-
-  componentDidMount() {
-    this.props.loadGoodsList();
+function GoodsGridList(props) {
+  const classes = props.classes;
+  if (props.loading) {
+    return <LoadingCircle />;
   }
 
-
-  render() {
-    const classes = this.props.classes;
-    if (this.props.loading) {
-      return <LoadingCircle />;
-    }
-
-    if (this.props.error) {
-      return (
-        <div onTouchTap={this.props.loadGoodsList}>
-          出错了。点击重试。
-        </div>
-      );
-    }
-
-    const goodsList = this.props.goodsList;
-    const { showGoodsDetail, addToShoppingCart } = this.props;
-
+  if (props.error) {
     return (
-      <div className={classes.root}>
-        {
-          goodsList.map((goods, index) => (
-            <Card
-              className={classes.card}
-              key={`commodity-${goods.commodity_id}`}
-              onTouchTap={() => showGoodsDetail(index)}
-            >
-              <div className={classes.details}>
-                <CardContent className={classes.content}>
-                  <Typography type="headline">{goods.name}</Typography>
-                  <Typography type="subheading" color="secondary">
-                    {<span>￥<b>{goods.price}</b></span>}
-                  </Typography>
-                </CardContent>
-                <div className={classes.controls}>
-                  <IconButton
-                    aria-label="addToShoppingCart"
-                    onTouchTap={e => addToShoppingCart(e, goods.commodity_id)}
-                  >
-                    <AddShoppingCart />
-                  </IconButton>
-                </div>
-              </div>
-              <div className={classes.cover}>
-                <img className={classes.responseImage} src={goods.cover} alt={goods.name} />
-              </div>
-            </Card>
-          ))
-        }
+      <div onTouchTap={props.loadGoodsList}>
+        出错了。点击重试。
       </div>
     );
   }
+
+  const goodsList = props.goodsList;
+  const { showGoodsDetail, addToShoppingCart } = props;
+
+  return (
+    <div className={classes.root}>
+      {
+        goodsList.map((goods, index) => (
+          <Card
+            className={classes.card}
+            key={`commodity-${goods.commodity_id}`}
+            onTouchTap={() => showGoodsDetail(index)}
+          >
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography type="headline">{goods.name}</Typography>
+                <Typography type="subheading" color="secondary">
+                  {<span>￥<b>{goods.price}</b></span>}
+                </Typography>
+              </CardContent>
+              <div className={classes.controls}>
+                <IconButton
+                  aria-label="addToShoppingCart"
+                  onTouchTap={e => addToShoppingCart(e, goods.commodity_id)}
+                >
+                  <AddShoppingCart />
+                </IconButton>
+              </div>
+            </div>
+            <div className={classes.cover}>
+              <img className={classes.responseImage} src={goods.cover} alt={goods.name} />
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+  );
 }
 
 GoodsGridList.propTypes = {

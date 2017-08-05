@@ -18,6 +18,7 @@ function ShoppingCart(props) {
 
 ShoppingCart.propTypes = {
   cartCardList: PropTypes.object.isRequired,
+  cartCardListActions: PropTypes.object.isRequired,
 };
 
 export default connect(

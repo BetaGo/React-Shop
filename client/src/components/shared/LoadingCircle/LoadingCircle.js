@@ -29,6 +29,6 @@ function LoadingCircle(props) {
 
 LoadingCircle.propTypes = {
   classes: PropTypes.object.isRequired,
-}
+};
 
 export default withStyles(styleSheet)(LoadingCircle);

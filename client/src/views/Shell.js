@@ -10,11 +10,22 @@ import * as appBarActions from '../components/Shell/AppBarRedux';
 import * as bottomNavigationActions from '../components/Shell/BottomNavigationRedux';
 import * as drawerActions from '../components/Shell/DrawerRedux';
 
+import { loadGoodsList } from '../components/Home/GoodsGridListRedux';
+import { loadCartsList } from '../components/ShoppingCart/CartCardListRedux';
+
+const loadActions = { loadGoodsList, loadCartsList };
+
 function Shell(props) {
+  const { cartList } = props;
+  const cartLength = cartList.goods.length;
   return (
     <div>
       <AppBar {...props.appBar} {...props.appBarActions} />
-      <BottomNavigation {...props.bottomNavigation} />
+      <BottomNavigation
+        {...props.bottomNavigation}
+        cartLength={cartLength}
+        {...props.loadActions}
+      />
       <Drawer {...props.drawer} {...props.drawerActions} />
     </div>
   );
@@ -26,6 +37,11 @@ Shell.propTypes = {
   bottomNavigation: PropTypes.object.isRequired,
   drawer: PropTypes.object.isRequired,
   drawerActions: PropTypes.object.isRequired,
+  loadActions: PropTypes.object.isRequired,
+};
+
+Shell.defaultProps = {
+  cartLength: 0,
 };
 
 
@@ -34,11 +50,13 @@ export default connect(
     appBar: state.shell.appBar,
     bottomNavigation: state.shell.bottomNavigation,
     drawer: state.shell.drawer,
+    cartList: state.shoppingCart.cartCardList,
   }),
   dispatch => ({
     appBarActions: bindActionCreators(appBarActions, dispatch),
     bottomNavigationActions: bindActionCreators(bottomNavigationActions, dispatch),
     drawerActions: bindActionCreators(drawerActions, dispatch),
+    loadActions: bindActionCreators(loadActions, dispatch),
   }),
 )(Shell);
 

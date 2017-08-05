@@ -35,10 +35,13 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
 
 
 class BottomNavigationSimple extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    value: 0,
-  };
+    this.state = {
+      value: '',
+    };
+  }
 
 
   componentWillMount() {
@@ -74,6 +77,10 @@ class BottomNavigationSimple extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.loadGoodsList();
+    this.props.loadCartsList();
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -81,19 +88,20 @@ class BottomNavigationSimple extends Component {
 
   render() {
     const classes = this.props.classes;
-    const { hidden } = this.props;
+    const { hidden, cartLength } = this.props;
     const { value } = this.state;
 
-    const shoppingCartIcon = (
+    const shoppingCartIconWidthBadge = (
       <div>
         <Badge
-          badgeContent={10}
+          badgeContent={cartLength}
           color="accent"
         >
           <IconShoppingCart />
         </Badge>
       </div>
     );
+    const shoppingCartIcon = <IconShoppingCart />;
     const goodsListIcon = <IconExplore />;
     const myOrderIcon = <IconPerson />;
 
@@ -125,7 +133,7 @@ class BottomNavigationSimple extends Component {
                 <NavLink className={classes.link} to="/shopping-cart" />
               </span>
             }
-            icon={shoppingCartIcon}
+            icon={cartLength > 0 ? shoppingCartIconWidthBadge : shoppingCartIcon}
           />
 
           <BottomNavigationButton
@@ -146,6 +154,9 @@ class BottomNavigationSimple extends Component {
 BottomNavigationSimple.propTypes = {
   classes: PropTypes.object.isRequired,
   hidden: PropTypes.bool.isRequired,
+  cartLength: PropTypes.number.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
+  loadGoodsList: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(BottomNavigationSimple);

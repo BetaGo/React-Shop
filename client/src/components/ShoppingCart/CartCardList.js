@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 
@@ -11,42 +11,34 @@ const styleSheet = createStyleSheet('CartCardList', {
   },
 });
 
-class CartCardList extends Component {
-
-  componentDidMount() {
-    this.props.loadCartsList();
+function CartCardList(props) {
+  if (props.loading) {
+    return <LoadingCircle />;
   }
 
-  render() {
-    if (this.props.loading) {
-      return <LoadingCircle />;
-    }
-
-    if (this.props.error) {
-      return (
-        <div>
-          出了点差错
-        </div>
-      );
-    }
-
-    const { classes, goods } = this.props;
+  if (props.error) {
     return (
-      <div className={classes.root}>
-        {
-          goods.map(commodity => (
-            <CartCard key={`cart-card-${commodity.commodity_id}`} {...commodity} />
-          ))
-        }
+      <div>
+        出了点差错
       </div>
     );
   }
+
+  const { classes, goods } = props;
+  return (
+    <div className={classes.root}>
+      {
+        goods.map(commodity => (
+          <CartCard key={`cart-card-${commodity.commodity_id}`} {...commodity} />
+        ))
+      }
+    </div>
+  );
 }
 
 CartCardList.propTypes = {
   classes: PropTypes.object.isRequired,
   goods: PropTypes.array.isRequired,
-  loadCartsList: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
 };
