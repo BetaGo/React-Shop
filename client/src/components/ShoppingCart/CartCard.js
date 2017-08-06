@@ -4,29 +4,43 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Checkbox from 'material-ui/Checkbox';
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
+import Menu, { MenuItem } from 'material-ui/Menu';
+import MoreVertIcon from 'material-ui-icons/MoreVert';
 
 import QuantityWrapper from '../shared/QuantityWrapper/QuantityWrapper';
 
 const styleSheet = createStyleSheet('CartCard', {
   card: {
-    display: 'flex',
     maxHeight: 180,
     margin: 6,
   },
-  checkboxWrapper: {
-    width: 48,
+  header: {
+    position: 'relative',
+    height: 48,
+    overflow: 'hidden',
+  },
+  title: {
+    lineHeight: '48px',
+    textOverflow: 'ellipsis',
+    height: '100%',
+    padding: '0 48px',
+  },
+  menu: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+  content: {
+    display: 'flex',
   },
   checkbox: {
     margin: 'auto',
   },
-  contentContainer: {
-    display: 'flex',
-  },
   cover: {
     width: '40%',
     display: 'flex',
-    background: 'rgba(0,0,0,0.2)',
+    flexDirection: 'column',
   },
   img: {
     width: '100%',
@@ -36,11 +50,6 @@ const styleSheet = createStyleSheet('CartCard', {
     width: '60%',
     display: 'flex',
     flexDirection: 'column',
-  },
-  cardTitle: {
-    height: 48,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
   },
   actions: {
     display: 'flex',
@@ -59,11 +68,15 @@ class CartCard extends Component {
     super(props);
     this.state = {
       quantity: this.props.quantity,
+      open: false,
+      anchorEl: undefined,
     };
 
     this.addNumberOfGoods = this.addNumberOfGoods.bind(this);
     this.reduceNumberOfGoods = this.reduceNumberOfGoods.bind(this);
     this.inputNumberOfGoods = this.inputNumberOfGoods.bind(this);
+    this.handleOpenMenu = this.handleOpenMenu.bind(this);
+    this.handleCloseMenu = this.handleCloseMenu.bind(this);
   }
 
   addNumberOfGoods(e) {
@@ -97,28 +110,60 @@ class CartCard extends Component {
     });
   }
 
+  handleOpenMenu(e) {
+    e.preventDefault();
+    this.setState({ open: true, anchorEl: e.currentTarget });
+  }
+
+  handleCloseMenu() {
+    this.setState({ open: false });
+  }
+
   render() {
     const classes = this.props.classes;
     // TODO:
     const { quantity } = this.state;
     const { name, price, cover, commodity_id } = this.props;
-    const { deleteCommodity } = this.props;
+    const { deleteCommodityWithNotice } = this.props;
 
     return (
       <div>
         <Card className={classes.card}>
-          <div className={classes.checkbox}>
-            <Checkbox />
+          <div className={classes.header}>
+            <Typography
+              type="subheading"
+              className={classes.title}
+            >
+              {name}
+            </Typography>
+            <IconButton className={classes.menu}>
+              <MoreVertIcon onTouchTap={this.handleOpenMenu} />
+            </IconButton>
+            <Menu
+              className={classes.menu}
+              anchorEl={this.state.anchorEl}
+              open={this.state.open}
+              onRequestClose={this.handleCloseMenu}
+              MenuListProps={{
+                style: {
+                  width: 200,
+                },
+              }}
+            >
+              <MenuItem onTouchTap={() => deleteCommodityWithNotice(1, commodity_id, `😃已将${name}移出购物车。`)}>
+                删除
+              </MenuItem>
+            </Menu>
           </div>
-          <div className={classes.contentContainer}>
+          <div className={classes.content}>
+            <div className={classes.checkbox}>
+              <Checkbox />
+            </div>
             <div className={classes.cover}>
               <img className={classes.img} src={cover} alt={name} />
             </div>
             <div className={classes.detail}>
               <CardContent>
-                <Typography className={classes.cardTitle} type="subheading" color="secondary">
-                  {name}
-                </Typography>
                 <span>￥{price}</span>
                 <div className={classes.actions}>
                   <div className={classes.flexCenter}>
@@ -129,12 +174,12 @@ class CartCard extends Component {
                       handleOnchange={this.inputNumberOfGoods}
                     />
                   </div>
-                  <Button
+                  {/* <Button
                     color="accent"
                     onTouchTap={() => deleteCommodity(1, commodity_id)}
                   >
                     删除
-                  </Button>
+                  </Button> */}
                 </div>
               </CardContent>
             </div>
@@ -152,7 +197,7 @@ CartCard.propTypes = {
   price: PropTypes.number.isRequired,
   cover: PropTypes.string.isRequired,
   commodity_id: PropTypes.number.isRequired,
-  deleteCommodity: PropTypes.func.isRequired,
+  deleteCommodityWithNotice: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCard);

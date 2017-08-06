@@ -3,7 +3,7 @@ const initialState = {
   message: '',
 };
 
-export function hideNotice(){
+export function hideNotice() {
   return {
     type: 'HIDE_NOTICE',
   };
@@ -23,7 +23,7 @@ export default function Notice(state = initialState, action) {
       return {
         ...state,
         open: false,
-      }
+      };
     }
 
     default:

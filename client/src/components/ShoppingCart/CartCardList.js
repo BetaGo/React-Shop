@@ -12,19 +12,27 @@ const styleSheet = createStyleSheet('CartCardList', {
 });
 
 function CartCardList(props) {
+  const { classes, goods } = props;
   if (props.loading) {
     return <LoadingCircle />;
   }
 
   if (props.error) {
     return (
-      <div>
+      <div className={classes.root}>
         出了点差错
       </div>
     );
   }
 
-  const { classes, goods } = props;
+  if (props.goods.length === 0) {
+    return (
+      <div className={classes.root}>
+        购物车里面什么都没有。。
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       {
@@ -32,7 +40,7 @@ function CartCardList(props) {
           <CartCard
             {...commodity}
             key={`cart-card-${commodity.commodity_id}`}
-            deleteCommodity={props.deleteCommodity}
+            deleteCommodityWithNotice={props.deleteCommodityWithNotice}
           />
         ))
       }
@@ -45,7 +53,7 @@ CartCardList.propTypes = {
   goods: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
-  deleteCommodity: PropTypes.func.isRequired,
+  deleteCommodityWithNotice: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCardList);

@@ -28,6 +28,7 @@ const styleSheet = createStyleSheet('GoodsGridList', {
   },
   cover: {
     display: 'flex',
+    flexDirection: 'column',
     width: '45%',
     background: 'rgba(0,0,0,0.2)',
   },
@@ -144,6 +145,7 @@ GoodsGridList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   loadCartsList: PropTypes.func.isRequired,
+  showNotice: PropTypes.func.isRequired,
 };
 
 GoodsGridList.defaultProps = {

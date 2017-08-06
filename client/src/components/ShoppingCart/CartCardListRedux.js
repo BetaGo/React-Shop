@@ -44,6 +44,53 @@ export function deleteCommodity(userId, commodityId) {
           payload: commodityId,
         });
       }
+      return json;
+    });
+  };
+}
+
+// export function deleteCommodityWithNotice(userId, commodity, message) {
+//   return (dispatch) => {
+//     Promise.resolve(deleteCommodity(userId, commodityId))
+//     .then((msg) => {
+//       if (msg.success === 1) {
+//         dispatch({
+//           type: 'SHOW_NOTICE',
+//           payload: message,
+//         })
+//       }
+//     })
+// }
+
+export function deleteCommodityWithNotice(userId, commodityId, message) {
+  const fetchHeaders = new Headers();
+  fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+  const data = `userId=${userId}&commodityId=${commodityId}`;
+  const fetchInit = {
+    method: 'DELETE',
+    headers: fetchHeaders,
+    body: data,
+  };
+  return (dispatch) => {
+    fetch('/api/cart', fetchInit)
+    .then(res => res.json())
+    .then((json) => {
+      if (json.success === 1) {
+        dispatch({
+          type: 'DELETE_COMMODITY_FROM_CART_SUCCESS',
+          payload: commodityId,
+        });
+      }
+      return json;
+    })
+    .then((msg) => {
+      if (msg.success === 1) {
+        dispatch({
+          type: 'SHOW_NOTICE',
+          payload: message,
+        });
+      }
     });
   };
 }
