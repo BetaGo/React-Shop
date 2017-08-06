@@ -166,13 +166,14 @@ router.delete('/cart', function (req, res, next) {
             if (commodity_id === goods[i].commodity_id) {
               let newGoods = goods.slice(0, i).concat(goods.slice(i + 1));
               cart.goods = newGoods;
-              cart.save(function (err) {
+              cart.save(function (err, newCart) {
                 if (err) {
                   console.log(err);
                 }
                 res.json({
                   success: 1,
                   type: 'delete a commodity from cart.',
+                  // goods: newCart.goods,
                 });
               });
               return true;

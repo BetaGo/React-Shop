@@ -56,7 +56,19 @@ const styleSheet = createStyleSheet('GoodsGridList', {
 // };
 
 function GoodsGridList(props) {
+  const goodsList = props.goodsList;
+  const { showGoodsDetail, addToShoppingCart, loadCartsList } = props;
   const classes = props.classes;
+
+  function addToCartAndRefresh(e, id) {
+    e.stopPropagation();
+    return Promise.resolve({ e, id })
+    .then(msg => addToShoppingCart(msg.e, msg.id))
+    .then(() => {
+      loadCartsList();
+    });
+  }
+
   if (props.loading) {
     return <LoadingCircle />;
   }
@@ -68,9 +80,6 @@ function GoodsGridList(props) {
       </div>
     );
   }
-
-  const goodsList = props.goodsList;
-  const { showGoodsDetail, addToShoppingCart } = props;
 
   return (
     <div className={classes.root}>
@@ -91,7 +100,7 @@ function GoodsGridList(props) {
               <div className={classes.controls}>
                 <IconButton
                   aria-label="addToShoppingCart"
-                  onTouchTap={e => addToShoppingCart(e, goods.commodity_id)}
+                  onTouchTap={e => addToCartAndRefresh(e, goods.commodity_id)}
                 >
                   <AddShoppingCart />
                 </IconButton>
@@ -115,6 +124,7 @@ GoodsGridList.propTypes = {
   addToShoppingCart: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.bool,
+  loadCartsList: PropTypes.func.isRequired,
 };
 
 GoodsGridList.defaultProps = {

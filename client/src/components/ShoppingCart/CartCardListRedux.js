@@ -24,6 +24,36 @@ export function loadCartsList() {
   };
 }
 
+export function deleteCommodity(userId, commodityId) {
+  const fetchHeaders = new Headers();
+  fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+  const data = `userId=${userId}&commodityId=${commodityId}`;
+  const fetchInit = {
+    method: 'DELETE',
+    headers: fetchHeaders,
+    body: data,
+  };
+  return (dispatch) => {
+    fetch('/api/cart', fetchInit)
+    .then(res => res.json())
+    .then((json) => {
+      if (json.success === 1) {
+        dispatch({
+          type: 'DELETE_COMMODITY_FROM_CART_SUCCESS',
+          payload: commodityId,
+        });
+      }
+    });
+  };
+}
+
+function deleteCommodityById(state, commodityId) {
+  const goods = state.goods;
+  const newGoods = goods.filter(commodity => commodity.commodity_id !== commodityId);
+  return newGoods;
+}
+
 export default function cartCardList(state = initialState, action) {
   switch (action.type) {
     case 'LOAD_CARTS_LIST': {
@@ -48,6 +78,15 @@ export default function cartCardList(state = initialState, action) {
         ...state,
         loading: false,
         error: true,
+      };
+    }
+
+    case 'DELETE_COMMODITY_FROM_CART_SUCCESS': {
+      const commodityId = action.payload;
+      const goods = deleteCommodityById(state, commodityId);
+      return {
+        ...state,
+        goods,
       };
     }
 

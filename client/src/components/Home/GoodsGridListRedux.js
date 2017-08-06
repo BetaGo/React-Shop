@@ -39,7 +39,7 @@ export function addToShoppingCart(e, id, quantity) {
    * =>显示底部BottomNavigation
    */
 
-  e.stopPropagation();
+  // e.stopPropagation();
   const fetchHeaders = new Headers();
   fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 

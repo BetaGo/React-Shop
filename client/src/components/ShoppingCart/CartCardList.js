@@ -29,7 +29,11 @@ function CartCardList(props) {
     <div className={classes.root}>
       {
         goods.map(commodity => (
-          <CartCard key={`cart-card-${commodity.commodity_id}`} {...commodity} />
+          <CartCard
+            {...commodity}
+            key={`cart-card-${commodity.commodity_id}`}
+            deleteCommodity={props.deleteCommodity}
+          />
         ))
       }
     </div>
@@ -41,6 +45,7 @@ CartCardList.propTypes = {
   goods: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
+  deleteCommodity: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCardList);

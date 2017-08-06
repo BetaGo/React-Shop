@@ -101,7 +101,8 @@ class CartCard extends Component {
     const classes = this.props.classes;
     // TODO:
     const { quantity } = this.state;
-    const { name, price, cover } = this.props;
+    const { name, price, cover, commodity_id } = this.props;
+    const { deleteCommodity } = this.props;
 
     return (
       <div>
@@ -130,6 +131,7 @@ class CartCard extends Component {
                   </div>
                   <Button
                     color="accent"
+                    onTouchTap={() => deleteCommodity(1, commodity_id)}
                   >
                     删除
                   </Button>
@@ -149,6 +151,8 @@ CartCard.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   cover: PropTypes.string.isRequired,
+  commodity_id: PropTypes.number.isRequired,
+  deleteCommodity: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCard);

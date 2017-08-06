@@ -10,6 +10,8 @@ import GoodsGridList from '../components/Home/GoodsGridList';
 import * as detailModalActions from '../components/Home/GoodsDetailModalRedux';
 import * as gridListActions from '../components/Home/GoodsGridListRedux';
 
+import { loadCartsList } from '../components/ShoppingCart/CartCardListRedux';
+
 function Home(props) {
   const index = props.goodsList.selectedIndex;
   const goodsDetail = props.goodsList.goodsList[index];
@@ -19,12 +21,14 @@ function Home(props) {
       <GoodsGridList
         {...props.goodsList}
         {...props.gridActions}
+        loadCartsList={props.loadCartsList}
       />
 
       <GoodsDetailModal
         {...goodsDetail}
         {...props.modalActions}
         {...props.goodsDetailModal}
+        loadCartsList={props.loadCartsList}
       />
     </div>
   );
@@ -35,6 +39,7 @@ Home.propTypes = {
   goodsDetailModal: PropTypes.object.isRequired,
   gridActions: PropTypes.object.isRequired,
   modalActions: PropTypes.object.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
 };
 
 
@@ -46,5 +51,6 @@ export default connect(
   dispatch => ({
     modalActions: bindActionCreators(detailModalActions, dispatch),
     gridActions: bindActionCreators(gridListActions, dispatch),
+    loadCartsList: bindActionCreators(loadCartsList, dispatch),
   }),
 )(Home);
