@@ -57,15 +57,34 @@ const styleSheet = createStyleSheet('GoodsGridList', {
 
 function GoodsGridList(props) {
   const goodsList = props.goodsList;
-  const { showGoodsDetail, addToShoppingCart, loadCartsList } = props;
+  const { showGoodsDetail, addToShoppingCart, loadCartsList, showNotice } = props;
   const classes = props.classes;
 
-  function addToCartAndRefresh(e, id) {
+
+  function addToCart(e, id) {
     e.stopPropagation();
     return Promise.resolve({ e, id })
     .then(msg => addToShoppingCart(msg.e, msg.id))
-    .then(() => {
-      loadCartsList();
+    .then((msg) => {
+      if (msg.success === 1) {
+        loadCartsList();
+      }
+      return msg;
+    });
+  }
+
+  function addToCartAndShowNotice(e, id, commodityName) {
+    return Promise.resolve(addToCart(e, id))
+    .then((msg) => {
+      let message;
+      if (msg.success === 2) {
+        message = '😉该商品已经在购物车里啦～';
+      } else if (msg.success === 1) {
+        message = `😊添加${commodityName}到购物车成功～`;
+      } else {
+        message = `☹添加${commodityName}到购物车失败～`;
+      }
+      showNotice(message);
     });
   }
 
@@ -100,7 +119,7 @@ function GoodsGridList(props) {
               <div className={classes.controls}>
                 <IconButton
                   aria-label="addToShoppingCart"
-                  onTouchTap={e => addToCartAndRefresh(e, goods.commodity_id)}
+                  onTouchTap={e => addToCartAndShowNotice(e, goods.commodity_id, goods.name)}
                 >
                   <AddShoppingCart />
                 </IconButton>

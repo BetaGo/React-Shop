@@ -86,7 +86,7 @@ router.post('/cart', function (req, res, next) {
                 }
                 // console.log(`tmp: ${tmp}`);
                 res.json({
-                  success: 1,
+                  success: 2,
                   type: 'update commodity quantity.'
                 });
               });

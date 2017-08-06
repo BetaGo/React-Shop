@@ -65,7 +65,7 @@ export function addToShoppingCart(e, id, quantity) {
     return fetch('/api/cart', fetchInit)
     .then(response => response.json())
     .then((json) => {
-      if (json.success === 1) {
+      if (json.success !== 0) {
         dispatch({
           type: 'ADD_TO_SHOPPING_CART',
         });
@@ -75,6 +75,7 @@ export function addToShoppingCart(e, id, quantity) {
           payload: json,
         });
       }
+      return json;
     });
   };
 }
@@ -99,6 +100,13 @@ export function showGoodsDetail(index) {
     dispatch({
       type: 'SHOW_MODAL',
     });
+  };
+}
+
+export function showNotice(message) {
+  return {
+    type: 'SHOW_NOTICE',
+    payload: message,
   };
 }
 
