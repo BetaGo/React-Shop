@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
 
 import Shell from '../views/Shell';
 import Home from '../views/Home';
@@ -11,16 +12,21 @@ import SignUp from '../components/SignUp/SignUp';
 
 
 const routes = browserHistory => (
-  <BrowserRouter history={browserHistory}>
+  <ConnectedRouter history={browserHistory}>
     <div>
-      <Route path="/goods-list" component={Home} />
-      <Route path="/shopping-cart" component={ShoppingCart} />
-      <Route path="/my-order" component={MyOrder} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
+      <Route
+        exact
+        path="/"
+        render={() => <Redirect to="/goods-list" />}
+      />
+      <Route exact path="/goods-list" component={Home} />
+      <Route exact path="/shopping-cart" component={ShoppingCart} />
+      <Route exact path="/my-order" component={MyOrder} />
+      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signup" component={SignUp} />
       <Shell />
     </div>
-  </BrowserRouter>
+  </ConnectedRouter>
 );
 
 export default routes;

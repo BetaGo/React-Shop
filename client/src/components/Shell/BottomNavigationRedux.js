@@ -1,20 +1,20 @@
 const initialState = {
-  hidden: false,
+  open: false,
 };
 
 export default function bottomNavigation(state = initialState, action) {
   switch (action.type) {
-    case 'HIDE_BOTTOM_NAV' : {
+    case 'OPEN_BOTTOM_NAV' : {
       return {
         ...state,
-        hidden: true,
+        open: true,
       };
     }
 
-    case 'SHOW_BOTTOM_NAV' : {
+    case 'CLOSE_BOTTOM_NAV' : {
       return {
         ...state,
-        hidden: false,
+        open: false,
       };
     }
 

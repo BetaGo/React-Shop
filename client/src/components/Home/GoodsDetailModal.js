@@ -80,7 +80,7 @@ class GoodsDetailModal extends Component {
   render() {
     const { quantity } = this.state;
     const classes = this.props.classes;
-    const { visible, images, name, desc, remain } = this.props;
+    const { open, images, name, desc, remain } = this.props;
     const {
       seeOthers,
       addToShoppingCart,
@@ -90,7 +90,7 @@ class GoodsDetailModal extends Component {
       <div>
         <Dialog
           fullScreen
-          open={visible}
+          open={open}
           transition={<Slide direction="down" />}
         >
           <DialogContent>
@@ -151,7 +151,7 @@ class GoodsDetailModal extends Component {
 
 GoodsDetailModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  visible: PropTypes.bool,
+  open: PropTypes.bool,
   images: PropTypes.array,
   name: PropTypes.string,
   desc: PropTypes.string,
@@ -164,7 +164,7 @@ GoodsDetailModal.propTypes = {
 
 GoodsDetailModal.defaultProps = {
   classes: PropTypes.object.isRequired,
-  visible: true,
+  open: false,
   images: [],
   name: ' ',
   desc: ' ',

@@ -57,10 +57,10 @@ export function addToShoppingCart(e, id, quantity) {
 
   return (dispatch) => {
     dispatch({
-      type: 'SHOW_BOTTOM_NAV',
+      type: 'OPEN_BOTTOM_NAV',
     });
     dispatch({
-      type: 'SHOW_APP_BAR',
+      type: 'OPEN_APP_BAR',
     });
     return fetch('/api/cart', fetchInit)
     .then(response => response.json())
@@ -95,17 +95,14 @@ export function showGoodsDetail(index) {
       payload: index,
     });
     dispatch({
-      type: 'HIDE_BOTTOM_NAV',
-    });
-    dispatch({
-      type: 'SHOW_MODAL',
+      type: 'OPEN_MODAL',
     });
   };
 }
 
 export function showNotice(message) {
   return {
-    type: 'SHOW_NOTICE',
+    type: 'OPEN_NOTICE',
     payload: message,
   };
 }

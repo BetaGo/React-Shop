@@ -10,13 +10,17 @@ import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
 
 const styleSheet = createStyleSheet('GoodsGridList', {
   root: {
-    margin: '60px 0',
+    margin: '72px 0',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
   card: {
     display: 'flex',
-    margin: 6,
+    margin: '6px auto',
     justifyContent: 'space-around',
     maxHeight: 180,
+    maxWidth: 365,
   },
   details: {
     display: 'flex',

@@ -27,6 +27,7 @@ function Shell(props) {
         {...props.bottomNavigation}
         cartLength={cartLength}
         {...props.loadActions}
+        pathname={props.pathname}
       />
       <Drawer {...props.drawer} {...props.drawerActions} />
       <Notice {...props.notice} {...props.noticeActions} />
@@ -58,6 +59,7 @@ export default connect(
     drawer: state.shell.drawer,
     notice: state.shell.notice,
     cartList: state.shoppingCart.cartCardList,
+    pathname: state.router.location.pathname,
   }),
   dispatch => ({
     appBarActions: bindActionCreators(appBarActions, dispatch),

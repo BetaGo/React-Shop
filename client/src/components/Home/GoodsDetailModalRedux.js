@@ -1,20 +1,20 @@
 const initialState = {
-  visible: false,
+  open: false,
 };
 
 
-export function showModal() {
+export function openModal() {
   // TODO:
   return {
-    type: 'SHOW_MODAL',
+    type: 'OPEN_MODAL',
   };
 }
 
 
-export function hideModal() {
+export function closeModal() {
   // TODO:
   return {
-    type: 'HIDE_MODAL',
+    type: 'CLOSE_MODAL',
   };
 }
 
@@ -22,11 +22,11 @@ export function seeOthers(e) {
   e.preventDefault();
   return (dispatch) => {
     dispatch({
-      type: 'HIDE_MODAL',
+      type: 'CLOSE_MODAL',
     });
 
     dispatch({
-      type: 'SHOW_BOTTOM_NAV',
+      type: 'OPEN_BOTTOM_NAV',
     });
   };
 }
@@ -46,8 +46,8 @@ export function addToShoppingCart(e) {
       type: 'ADD_TO_SHOPPING_CART',
       payload: '',
     });
-    dispatch({ type: 'HIDE_MODAL' });
-    dispatch({ type: 'SHOW_BOTTOM_NAV' });
+    dispatch({ type: 'CLOSE_MODAL' });
+    dispatch({ type: 'OPEN_BOTTOM_NAV' });
   };
 }
 
@@ -56,7 +56,7 @@ export function buyNow(e) {
   // TODO:
   e.preventDefault();
   return (dispatch) => {
-    dispatch({ type: 'HIDE_MODAL' });
+    dispatch({ type: 'CLOSE_MODAL' });
     return dispatch({
       type: 'BUY_NOW',
     });
@@ -67,17 +67,17 @@ export function buyNow(e) {
 export default function goodsDetail(state = initialState, action) {
   // TODO:
   switch (action.type) {
-    case 'SHOW_MODAL': {
+    case 'OPEN_MODAL': {
       return {
         ...state,
-        visible: true,
+        open: true,
       };
     }
 
-    case 'HIDE_MODAL': {
+    case 'CLOSE_MODAL': {
       return {
         ...state,
-        visible: false,
+        open: false,
       };
     }
 

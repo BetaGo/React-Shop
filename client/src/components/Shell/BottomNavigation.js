@@ -33,64 +33,40 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
   },
 });
 
+function getValue(__pathname) {
+  const re = /^\/([A-Za-z0-9_-]+)\/*/;
+  const path = re.exec(__pathname) ? re.exec(__pathname)[1] : '';
+
+  switch (path) {
+    case 'goods-list': {
+      return 0;
+    }
+
+    case 'shopping-cart': {
+      return 1;
+    }
+
+    case 'my-order': {
+      return 2;
+    }
+
+    default:
+      return '';
+  }
+}
+
 
 class BottomNavigationSimple extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: '',
-    };
-  }
-
-
-  componentWillMount() {
-    const url = window.location.pathname;
-    const re = /^\/([A-Za-z0-9_-]+)\/*/;
-
-    const path = re.exec(url) ? re.exec(url)[1] : '';
-
-    switch (path) {
-      case 'goods-list': {
-        this.setState({
-          value: 0,
-        });
-        break;
-      }
-
-      case 'shopping-cart': {
-        this.setState({
-          value: 1,
-        });
-        break;
-      }
-
-      case 'my-order': {
-        this.setState({
-          value: 2,
-        });
-        break;
-      }
-
-      default:
-        break;
-    }
-  }
-
   componentDidMount() {
     this.props.loadGoodsList();
     this.props.loadCartsList();
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  }
-
   render() {
-    const classes = this.props.classes;
-    const { hidden, cartLength } = this.props;
-    const { value } = this.state;
-
+    const { pathname, classes, open, cartLength } = this.props;
+    const shoppingCartIcon = <IconShoppingCart />;
+    const goodsListIcon = <IconExplore />;
+    const myOrderIcon = <IconPerson />;
     const shoppingCartIconWidthBadge = (
       <div>
         <Badge
@@ -101,20 +77,18 @@ class BottomNavigationSimple extends Component {
         </Badge>
       </div>
     );
-    const shoppingCartIcon = <IconShoppingCart />;
-    const goodsListIcon = <IconExplore />;
-    const myOrderIcon = <IconPerson />;
 
+    const value = getValue(pathname);
     return (
       <div
         className={classNames(
           classes.root,
           {
-            [classes.hidden]: hidden,
+            [classes.hidden]: !open,
           },
         )}
       >
-        <BottomNavigation value={value} onChange={this.handleChange} showLabels>
+        <BottomNavigation value={value} showLabels>
 
           <BottomNavigationButton
             label={
@@ -153,8 +127,9 @@ class BottomNavigationSimple extends Component {
 
 BottomNavigationSimple.propTypes = {
   classes: PropTypes.object.isRequired,
-  hidden: PropTypes.bool.isRequired,
+  open: PropTypes.bool.isRequired,
   cartLength: PropTypes.number.isRequired,
+  pathname: PropTypes.string.isRequired,
   loadCartsList: PropTypes.func.isRequired,
   loadGoodsList: PropTypes.func.isRequired,
 };

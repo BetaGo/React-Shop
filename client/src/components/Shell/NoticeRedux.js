@@ -5,13 +5,13 @@ const initialState = {
 
 export function hideNotice() {
   return {
-    type: 'HIDE_NOTICE',
+    type: 'CLOSE_NOTICE',
   };
 }
 
 export default function Notice(state = initialState, action) {
   switch (action.type) {
-    case 'SHOW_NOTICE': {
+    case 'OPEN_NOTICE': {
       return {
         ...state,
         open: true,
@@ -19,7 +19,7 @@ export default function Notice(state = initialState, action) {
       };
     }
 
-    case 'HIDE_NOTICE': {
+    case 'CLOSE_NOTICE': {
       return {
         ...state,
         open: false,

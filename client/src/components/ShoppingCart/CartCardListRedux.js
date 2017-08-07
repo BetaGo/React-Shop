@@ -55,7 +55,7 @@ export function deleteCommodity(userId, commodityId) {
 //     .then((msg) => {
 //       if (msg.success === 1) {
 //         dispatch({
-//           type: 'SHOW_NOTICE',
+//           type: 'OPEN_NOTICE',
 //           payload: message,
 //         })
 //       }
@@ -87,7 +87,7 @@ export function deleteCommodityWithNotice(userId, commodityId, message) {
     .then((msg) => {
       if (msg.success === 1) {
         dispatch({
-          type: 'SHOW_NOTICE',
+          type: 'OPEN_NOTICE',
           payload: message,
         });
       }

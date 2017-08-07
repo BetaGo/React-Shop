@@ -3,6 +3,7 @@ const OPEN_DRAWER = 'OPEN_DRAWER';
 
 const initialState = {
   title: ' ',
+  open: true,
 };
 
 export function changeTitle(title) {

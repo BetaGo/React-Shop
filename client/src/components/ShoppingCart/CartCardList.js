@@ -7,7 +7,10 @@ import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
 
 const styleSheet = createStyleSheet('CartCardList', {
   root: {
-    margin: '60px 0',
+    margin: '72px 0',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
   },
 });
 

@@ -13,7 +13,8 @@ import QuantityWrapper from '../shared/QuantityWrapper/QuantityWrapper';
 const styleSheet = createStyleSheet('CartCard', {
   card: {
     maxHeight: 180,
-    margin: 6,
+    maxWidth: 365,
+    margin: '6px auto',
   },
   header: {
     position: 'relative',
