@@ -29,7 +29,7 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
     outline: 'none',
   },
   hidden: {
-    transform: 'translateY(80px)',
+    transform: 'translateY(60px)',
   },
 });
 

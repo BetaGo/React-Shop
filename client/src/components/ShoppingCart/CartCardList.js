@@ -5,14 +5,20 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import CartCard from './CartCard';
 import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
 
-const styleSheet = createStyleSheet('CartCardList', {
+const styleSheet = createStyleSheet('CartCardList', theme => ({
   root: {
-    margin: '72px 0',
+    margin: '56px 0',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      margin: '48px 0',
+    },
+    [theme.breakpoints.up('sm')]: {
+      margin: '64px 0',
+    },
   },
-});
+}));
 
 function CartCardList(props) {
   const { classes, goods } = props;

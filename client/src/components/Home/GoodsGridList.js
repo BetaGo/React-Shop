@@ -8,12 +8,18 @@ import AddShoppingCart from 'material-ui-icons/AddShoppingCart';
 
 import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
 
-const styleSheet = createStyleSheet('GoodsGridList', {
+const styleSheet = createStyleSheet('GoodsGridList', theme => ({
   root: {
-    margin: '72px 0',
+    margin: '56px 0',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      margin: '48px 0',
+    },
+    [theme.breakpoints.up('sm')]: {
+      margin: '64px 0',
+    },
   },
   card: {
     display: 'flex',
@@ -47,7 +53,7 @@ const styleSheet = createStyleSheet('GoodsGridList', {
     maxHeight: 180,
     margin: 'auto',
   },
-});
+}));
 
 // const styles = {
 //   root: {
@@ -62,9 +68,21 @@ const styleSheet = createStyleSheet('GoodsGridList', {
 
 function GoodsGridList(props) {
   const goodsList = props.goodsList;
-  const { showGoodsDetail, addToShoppingCart, loadCartsList, showNotice } = props;
+  const { showGoodsDetail,
+    addToShoppingCart,
+    loadCartsList,
+    showNotice,
+    showAppBar,
+    hideAppBar,
+    showBottomNav,
+    hideBottomNav,
+  } = props;
+
   const classes = props.classes;
 
+  let touchStartX;
+  let touchStartY;
+  let touchStartTime;
 
   function addToCart(e, id) {
     e.stopPropagation();
@@ -93,6 +111,32 @@ function GoodsGridList(props) {
     });
   }
 
+  function onTouchStart(e) {
+    touchStartX = e.touches[0].pageX;
+    touchStartY = e.touches[0].pageY;
+    touchStartTime = Date.now();
+  }
+
+  function onTouchEnd(e) {
+    // const touchEndX = e.changedTouches[0].pageX;
+    const touchEndY = e.changedTouches[0].pageY;
+    const curTime = Date.now();
+    const dy = touchEndY - touchStartY;
+    const dt = curTime - touchStartTime;
+
+    if (dt < 1000) {
+      if (dy > 3) {
+        showAppBar();
+        showBottomNav();
+      }
+
+      if (dy < -3) {
+        hideAppBar();
+        hideBottomNav();
+      }
+    }
+  }
+
   if (props.loading) {
     return <LoadingCircle />;
   }
@@ -106,7 +150,11 @@ function GoodsGridList(props) {
   }
 
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       {
         goodsList.map((goods, index) => (
           <Card

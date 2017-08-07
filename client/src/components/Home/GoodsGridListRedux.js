@@ -59,9 +59,6 @@ export function addToShoppingCart(e, id, quantity) {
     dispatch({
       type: 'OPEN_BOTTOM_NAV',
     });
-    dispatch({
-      type: 'OPEN_APP_BAR',
-    });
     return fetch('/api/cart', fetchInit)
     .then(response => response.json())
     .then((json) => {
@@ -104,6 +101,30 @@ export function showNotice(message) {
   return {
     type: 'OPEN_NOTICE',
     payload: message,
+  };
+}
+
+export function showBottomNav() {
+  return {
+    type: 'OPEN_BOTTOM_NAV',
+  };
+}
+
+export function hideBottomNav() {
+  return {
+    type: 'CLOSE_BOTTOM_NAV',
+  };
+}
+
+export function showAppBar() {
+  return {
+    type: 'OPEN_APP_BAR',
+  };
+}
+
+export function hideAppBar() {
+  return {
+    type: 'CLOSE_APP_BAR',
   };
 }
 

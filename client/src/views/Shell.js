@@ -25,6 +25,7 @@ function Shell(props) {
       <AppBar {...props.appBar} {...props.appBarActions} />
       <BottomNavigation
         {...props.bottomNavigation}
+        {...props.bottomNavigationActions}
         cartLength={cartLength}
         {...props.loadActions}
         pathname={props.pathname}
@@ -39,12 +40,14 @@ Shell.propTypes = {
   appBar: PropTypes.object.isRequired,
   appBarActions: PropTypes.object.isRequired,
   bottomNavigation: PropTypes.object.isRequired,
+  bottomNavigationActions: PropTypes.object.isRequired,
   drawer: PropTypes.object.isRequired,
   drawerActions: PropTypes.object.isRequired,
   loadActions: PropTypes.object.isRequired,
   cartList: PropTypes.object.isRequired,
   notice: PropTypes.object.isRequired,
   noticeActions: PropTypes.object.isRequired,
+  pathname: PropTypes.string.isRequired,
 };
 
 Shell.defaultProps = {
