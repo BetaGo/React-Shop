@@ -145,11 +145,6 @@ class CartCard extends Component {
               anchorEl={this.state.anchorEl}
               open={this.state.open}
               onRequestClose={this.handleCloseMenu}
-              MenuListProps={{
-                style: {
-                  width: 200,
-                },
-              }}
             >
               <MenuItem onTouchTap={() => deleteCommodityWithNotice(1, commodity_id, `😃已将${name}移出购物车。`)}>
                 删除

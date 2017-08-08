@@ -29,7 +29,7 @@ const styleSheet = createStyleSheet('BottomNavigationSimple', {
     outline: 'none',
   },
   hidden: {
-    transform: 'translateY(60px)',
+    transform: 'translateY(80px)',
   },
 });
 
@@ -64,6 +64,7 @@ class BottomNavigationSimple extends Component {
 
   render() {
     const { pathname, classes, open, cartLength } = this.props;
+    const { closeBottomNav } = this.props;
     const shoppingCartIcon = <IconShoppingCart />;
     const goodsListIcon = <IconExplore />;
     const myOrderIcon = <IconPerson />;
@@ -108,6 +109,7 @@ class BottomNavigationSimple extends Component {
               </span>
             }
             icon={cartLength > 0 ? shoppingCartIconWidthBadge : shoppingCartIcon}
+            onTouchTap={closeBottomNav}
           />
 
           <BottomNavigationButton
@@ -132,6 +134,7 @@ BottomNavigationSimple.propTypes = {
   pathname: PropTypes.string.isRequired,
   loadCartsList: PropTypes.func.isRequired,
   loadGoodsList: PropTypes.func.isRequired,
+  closeBottomNav: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(BottomNavigationSimple);

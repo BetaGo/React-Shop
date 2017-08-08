@@ -95,6 +95,18 @@ export function deleteCommodityWithNotice(userId, commodityId, message) {
   };
 }
 
+export function openBottomNav() {
+  return {
+    type: 'OPEN_BOTTOM_NAV',
+  };
+}
+
+export function openAppBar() {
+  return {
+    type: 'OPEN_APP_BAR',
+  };
+}
+
 function deleteCommodityById(state, commodityId) {
   const goods = state.goods;
   const newGoods = goods.filter(commodity => commodity.commodity_id !== commodityId);

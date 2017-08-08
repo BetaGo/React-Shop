@@ -8,6 +8,7 @@ function Notice(props) {
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={props.open}
+        autoHideDuration={1500}
         onRequestClose={props.hideNotice}
         message={props.message}
       />

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 
 import CartCard from './CartCard';
+import CartActionBar from './CartActionBar';
 import LoadingCircle from '../shared/LoadingCircle/LoadingCircle';
 
 const styleSheet = createStyleSheet('CartCardList', theme => ({
@@ -22,6 +23,8 @@ const styleSheet = createStyleSheet('CartCardList', theme => ({
 
 function CartCardList(props) {
   const { classes, goods } = props;
+  const { openBottomNav, openAppBar } = props;
+  openAppBar();
   if (props.loading) {
     return <LoadingCircle />;
   }
@@ -35,6 +38,7 @@ function CartCardList(props) {
   }
 
   if (props.goods.length === 0) {
+    openBottomNav();
     return (
       <div className={classes.root}>
         购物车里面什么都没有。。
@@ -53,6 +57,7 @@ function CartCardList(props) {
           />
         ))
       }
+      <CartActionBar total={10240} />
     </div>
   );
 }
