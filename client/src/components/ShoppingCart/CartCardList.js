@@ -31,7 +31,7 @@ class CartCardList extends Component {
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSelectAll = this.handleSelectAll.bind(this);
-    this.getTotal = this.getTotal.bind(this);
+    this.getTotalPrice = this.getTotalPrice.bind(this);
   }
 
   componentDidMount() {
@@ -39,17 +39,17 @@ class CartCardList extends Component {
     this.props.openAppBar();
   }
 
-  getTotal() {
+  getTotalPrice() {
     const { goods } = this.props;
     const { cart } = this.state;
     const cartName = cart.map(a => a.name);
     let total = 0;
     for (let i = 0; i < goods.length; i += 1) {
-      if (cartName.indexOf(goods[i].commodity) !== -1) {
+      if (cartName.indexOf(goods[i].commodity_id.toString()) !== -1) {
         total += goods[i].price * goods[i].quantity;
       }
     }
-    return total;
+    return total.toFixed(2);
   }
 
   handleSelect(e) {
@@ -123,9 +123,10 @@ class CartCardList extends Component {
           ))
         }
         <CartActionBar
-          total={this.getTotal()}
+          totalPrice={this.getTotalPrice()}
           handleSelectAll={this.handleSelectAll}
           isSelectedAll={this.state.cart.length === this.props.goods.length}
+          totalQuantity={this.state.cart.length}
         />
       </div>
     );

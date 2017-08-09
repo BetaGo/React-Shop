@@ -6,6 +6,7 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Checkbox from 'material-ui/Checkbox';
 import FormControlLabel from 'material-ui/Form/FormControlLabel';
 import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
 import IconButton from 'material-ui/IconButton';
 import IconShoppingCart from 'material-ui-icons/ShoppingCart';
@@ -33,7 +34,20 @@ const styleSheet = createStyleSheet('CartActionBar', theme => ({
     padding: 12,
   },
   total: {
+    display: 'flex',
+    flexDirection: 'column',
     lineHeight: '56px',
+    marginLeft: '-12px',
+    flex: 1,
+    paddingRight: 12,
+  },
+  totalHeader: {
+    fontSize: '14px',
+    fontWeight: 'bold',
+    lineHeight: '56px',
+  },
+  flexCenter: {
+    margin: 'auto',
   },
   arrow: {
     position: 'absolute',
@@ -118,10 +132,10 @@ class CartActionBar extends Component {
           onTouchTap={handleSelectAll}
         />
         <div className={classes.total}>
-          总计：￥{this.props.total}
+          <Typography className={classes.totalHeader} type="title">合计：￥{this.props.totalPrice}</Typography>
         </div>
         <Button color="accent" raised>
-          去结算(5)
+          去结算({this.props.totalQuantity})
         </Button>
       </div>
     );
@@ -160,7 +174,8 @@ CartActionBar.propTypes = {
   classes: PropTypes.object.isRequired,
   isSelectedAll: PropTypes.bool.isRequired,
   handleSelectAll: PropTypes.func.isRequired,
-  total: PropTypes.number.isRequired,
+  totalPrice: PropTypes.string.isRequired,
+  totalQuantity: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export default withStyles(styleSheet)(CartActionBar);

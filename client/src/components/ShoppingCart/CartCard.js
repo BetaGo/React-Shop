@@ -154,8 +154,8 @@ class CartCard extends Component {
             <div className={classes.checkbox}>
               <Checkbox
                 checked={isSelected}
-                name={commodity_id}
-                value={this.state.quantity}
+                name={commodity_id.toString()}
+                value={this.state.quantity.toString()}
                 onTouchTap={handleSelect}
               />
             </div>
