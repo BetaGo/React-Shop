@@ -124,8 +124,8 @@ class CartCard extends Component {
     const classes = this.props.classes;
     // TODO:
     const { quantity } = this.state;
-    const { name, price, cover, commodity_id } = this.props;
-    const { deleteCommodityWithNotice } = this.props;
+    const { name, price, cover, commodity_id, isSelected } = this.props;
+    const { deleteCommodityWithNotice, handleSelect } = this.props;
 
     return (
       <div>
@@ -141,7 +141,6 @@ class CartCard extends Component {
               <MoreVertIcon onTouchTap={this.handleOpenMenu} />
             </IconButton>
             <Menu
-              className={classes.menu}
               anchorEl={this.state.anchorEl}
               open={this.state.open}
               onRequestClose={this.handleCloseMenu}
@@ -153,7 +152,12 @@ class CartCard extends Component {
           </div>
           <div className={classes.content}>
             <div className={classes.checkbox}>
-              <Checkbox />
+              <Checkbox
+                checked={isSelected}
+                name={commodity_id}
+                value={this.state.quantity}
+                onTouchTap={handleSelect}
+              />
             </div>
             <div className={classes.cover}>
               <img className={classes.img} src={cover} alt={name} />
@@ -194,6 +198,8 @@ CartCard.propTypes = {
   cover: PropTypes.string.isRequired,
   commodity_id: PropTypes.number.isRequired,
   deleteCommodityWithNotice: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  handleSelect: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCard);

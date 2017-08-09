@@ -103,18 +103,19 @@ class CartActionBar extends Component {
   }
 
   getActionNav() {
-    const { classes } = this.props;
+    const { classes, handleSelectAll } = this.props;
     return (
       <div className={classes.actionNav} >
         <FormControlLabel
           control={
             <Checkbox
-              checked={this.props.checkedAll}
+              checked={this.props.isSelectedAll}
               value="checkedAll"
             />
           }
           className={classes.label}
           label="全选"
+          onTouchTap={handleSelectAll}
         />
         <div className={classes.total}>
           总计：￥{this.props.total}
@@ -157,7 +158,8 @@ class CartActionBar extends Component {
 
 CartActionBar.propTypes = {
   classes: PropTypes.object.isRequired,
-  checkedAll: PropTypes.func.isRequired,
+  isSelectedAll: PropTypes.bool.isRequired,
+  handleSelectAll: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 
@@ -21,45 +21,115 @@ const styleSheet = createStyleSheet('CartCardList', theme => ({
   },
 }));
 
-function CartCardList(props) {
-  const { classes, goods } = props;
-  const { openBottomNav, openAppBar } = props;
-  openAppBar();
-  if (props.loading) {
-    return <LoadingCircle />;
+
+class CartCardList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: [],
+    };
+
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSelectAll = this.handleSelectAll.bind(this);
+    this.getTotal = this.getTotal.bind(this);
   }
 
-  if (props.error) {
-    return (
-      <div className={classes.root}>
-        出了点差错
-      </div>
-    );
+  componentDidMount() {
+    // 强制显示顶部 AppBar
+    this.props.openAppBar();
   }
 
-  if (props.goods.length === 0) {
-    openBottomNav();
-    return (
-      <div className={classes.root}>
-        购物车里面什么都没有。。
-      </div>
-    );
-  }
-
-  return (
-    <div className={classes.root}>
-      {
-        goods.map(commodity => (
-          <CartCard
-            {...commodity}
-            key={`cart-card-${commodity.commodity_id}`}
-            deleteCommodityWithNotice={props.deleteCommodityWithNotice}
-          />
-        ))
+  getTotal() {
+    const { goods } = this.props;
+    const { cart } = this.state;
+    const cartName = cart.map(a => a.name);
+    let total = 0;
+    for (let i = 0; i < goods.length; i += 1) {
+      if (cartName.indexOf(goods[i].commodity) !== -1) {
+        total += goods[i].price * goods[i].quantity;
       }
-      <CartActionBar total={10240} />
-    </div>
-  );
+    }
+    return total;
+  }
+
+  handleSelect(e) {
+    const { name, value, checked } = e.target;
+    let { cart } = this.state;
+    const cartName = cart.map(a => a.name);
+    if (!checked && cartName.indexOf(name) === -1) {
+      cart.push({ name, value });
+    } else {
+      cart = cart.filter(a => a.name !== name);
+    }
+
+    this.setState({
+      cart,
+    });
+  }
+
+  handleSelectAll() {
+    const { goods } = this.props;
+    let { cart } = this.state;
+    if (goods.length === cart.length) {
+      cart = [];
+    } else {
+      cart = goods.map(commodity => ({
+        name: commodity.commodity_id.toString(), value: commodity.quantity.toString(),
+      }));
+    }
+    this.setState({
+      cart,
+    });
+  }
+
+  render() {
+    const { classes, goods, loading, error } = this.props;
+    const { openBottomNav, deleteCommodityWithNotice } = this.props;
+    const cartName = this.state.cart.map(a => a.name);
+
+    if (loading) {
+      return <LoadingCircle />;
+    }
+
+    if (error) {
+      return (
+        <div className={classes.root}>
+          出了点差错
+        </div>
+      );
+    }
+
+    if (goods.length === 0) {
+      // 如果购物车为空，强制显示底部导航栏。
+      openBottomNav();
+      return (
+        <div className={classes.root}>
+          购物车里面什么都没有。。
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.root}>
+        {
+          goods.map(commodity => (
+            <CartCard
+              {...commodity}
+              isSelected={cartName.indexOf(commodity.commodity_id.toString()) !== -1}
+              handleSelect={this.handleSelect}
+              key={`cart-card-${commodity.commodity_id}`}
+              deleteCommodityWithNotice={deleteCommodityWithNotice}
+            />
+          ))
+        }
+        <CartActionBar
+          total={this.getTotal()}
+          handleSelectAll={this.handleSelectAll}
+          isSelectedAll={this.state.cart.length === this.props.goods.length}
+        />
+      </div>
+    );
+  }
 }
 
 CartCardList.propTypes = {
@@ -68,6 +138,8 @@ CartCardList.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
   deleteCommodityWithNotice: PropTypes.func.isRequired,
+  openAppBar: PropTypes.func.isRequired,
+  openBottomNav: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCardList);
