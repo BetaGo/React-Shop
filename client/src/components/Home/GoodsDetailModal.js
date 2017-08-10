@@ -46,21 +46,31 @@ class GoodsDetailModal extends Component {
     this.inputNumberOfGoods = this.inputNumberOfGoods.bind(this);
   }
 
+  componentWillReceiveProps() {
+    // 默认数量为 1
+    this.setState({
+      quantity: 1,
+    });
+  }
+
   addNumberOfGoods(e) {
     // TODO: 与服务器通讯，检查商品数量是否充足
     e.preventDefault();
+    let { quantity } = this.state;
+    quantity = (quantity + 1 <= this.props.remain) ? quantity + 1 : quantity;
     this.setState({
-      quantity: this.state.quantity + 1,
+      quantity,
     });
   }
 
   reduceNumberOfGoods(e) {
+    // TODO: 与服务器通讯，检查商品数量是否充足
     e.preventDefault();
-    if (this.state.quantity > 1) {
-      this.setState({
-        quantity: this.state.quantity - 1,
-      });
-    }
+    let { quantity } = this.state;
+    quantity = (quantity > 1) ? quantity - 1 : quantity;
+    this.setState({
+      quantity,
+    });
   }
 
   inputNumberOfGoods(e) {
@@ -71,6 +81,11 @@ class GoodsDetailModal extends Component {
       quantity = parseInt(receivedValue, 10);
     } catch (err) {
       console.log(err.message);
+    }
+    if (quantity && quantity > this.props.remain) {
+      quantity = this.props.remain;
+    } else if (quantity && quantity <= 0) {
+      quantity = 1;
     }
     this.setState({
       quantity: quantity || 0,
@@ -104,6 +119,8 @@ class GoodsDetailModal extends Component {
               handleOnchange={this.inputNumberOfGoods}
               handleRemove={this.reduceNumberOfGoods}
               handleAdd={this.addNumberOfGoods}
+              disableRemove={quantity <= 1}
+              disableAdd={quantity >= remain}
             />
             {/* <div className={classes.numberActionContainer}>
               <IconButton

@@ -40,6 +40,7 @@ function QuantityWrapper(props) {
       <IconButton
         aria-label="Remove"
         onTouchTap={handleRemove}
+        disabled={props.disableRemove}
       >
         <RemoveIcon />
       </IconButton>
@@ -54,6 +55,7 @@ function QuantityWrapper(props) {
       <IconButton
         aria-label="Add"
         onTouchTap={handleAdd}
+        disabled={props.disableAdd}
       >
         <AddIcon />
       </IconButton>
@@ -67,6 +69,13 @@ QuantityWrapper.propTypes = {
   handleAdd: PropTypes.func.isRequired,
   handleOnchange: PropTypes.func.isRequired,
   quantity: PropTypes.number.isRequired,
+  disableAdd: PropTypes.bool,
+  disableRemove: PropTypes.bool,
+};
+
+QuantityWrapper.defaultProps = {
+  disableAdd: false,
+  disableRemove: false,
 };
 
 export default withStyles(styleSheet)(QuantityWrapper);

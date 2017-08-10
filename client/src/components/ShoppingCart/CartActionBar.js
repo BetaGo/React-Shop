@@ -39,7 +39,6 @@ const styleSheet = createStyleSheet('CartActionBar', theme => ({
     lineHeight: '56px',
     marginLeft: '-12px',
     flex: 1,
-    paddingRight: 12,
   },
   totalHeader: {
     fontSize: '14px',

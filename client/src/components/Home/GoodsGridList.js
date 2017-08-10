@@ -80,7 +80,6 @@ function GoodsGridList(props) {
 
   const classes = props.classes;
 
-  let touchStartX;
   let touchStartY;
   let touchStartTime;
 
@@ -101,18 +100,17 @@ function GoodsGridList(props) {
     .then((msg) => {
       let message;
       if (msg.success === 2) {
-        message = '😉该商品已经在购物车里啦～';
+        message = `😉 ${commodityName} 已经在购物车里啦～`;
       } else if (msg.success === 1) {
-        message = `😊添加${commodityName}到购物车成功～`;
+        message = `😊添加 ${commodityName} 到购物车成功～`;
       } else {
-        message = `☹添加${commodityName}到购物车失败～`;
+        message = `☹添加 ${commodityName} 到购物车失败～`;
       }
       showNotice(message);
     });
   }
 
   function onTouchStart(e) {
-    touchStartX = e.touches[0].pageX;
     touchStartY = e.touches[0].pageY;
     touchStartTime = Date.now();
   }
@@ -198,6 +196,10 @@ GoodsGridList.propTypes = {
   error: PropTypes.bool,
   loadCartsList: PropTypes.func.isRequired,
   showNotice: PropTypes.func.isRequired,
+  showAppBar: PropTypes.func.isRequired,
+  showBottomNav: PropTypes.func.isRequired,
+  hideAppBar: PropTypes.func.isRequired,
+  hideBottomNav: PropTypes.func.isRequired,
 };
 
 GoodsGridList.defaultProps = {
