@@ -4,5 +4,5 @@ import { combineReducers } from 'redux';
 import goodsList from '../components/GoodsList/GoodsCardRedux';
 
 export default combineReducers({
-  goodsList
+  goodsList,
 });

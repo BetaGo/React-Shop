@@ -1,24 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 import './carousel.css';
 
 
-function getOuterWidth(el) {
-  return el.offsetWidth;
-}
-
 class Carousel extends Component {
+
+  static propTypes = {
+    images: PropTypes.array.isRequired,
+    width: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  }
+
+  static defaultProps = {
+    height: '100%',
+    width: '100%',
+  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      height: "100%",
+      height: this.props.height,
+      width: this.props.width,
       left: 0,
-      activeIndex: 0
-    }
+      activeIndex: 0,
+    };
 
     // this.handlePointerClick = this.handlePointerClick.bind(this);
     this.onNodeTouchStart = this.onNodeTouchStart.bind(this);
@@ -30,16 +43,24 @@ class Carousel extends Component {
     this.touchStartX = null;
     this.touchStartY = null;
     this.touchStartTime = null;
+    this.carouselElement = null;
   }
-
 
   componentDidMount() {
-    const node = ReactDOM.findDOMNode(this);
+    const width = this.state.width;
+    const height = this.state.height;
+    const re = /^\d+%$/;
 
-    this.setState({
-      height: getOuterWidth(node) * 0.75,
-    })
+    if (re.test(width) && re.test(height)) {
+      if (this.carouselElement !== null) {
+        this.setState({
+          width: this.carouselElement.offsetWidth,
+          height: this.carouselElement.offsetHeight,
+        });
+      }
+    }
   }
+
 
   onNodeTouchStart(e) {
     this.touchStartX = e.touches[0].pageX;
@@ -48,13 +69,6 @@ class Carousel extends Component {
   }
 
   onNodeTouchMove(e) {
-
-    if ( this.state.activeIndex === this.props.images.length - 1 ||
-      this.state.activeIndex === 0
-    ) {
-      return;
-    }
-
     const currentX = e.touches[0].pageX;
     const currentY = e.touches[0].pageY;
     const dX = currentX - this.touchStartX;
@@ -63,7 +77,14 @@ class Carousel extends Component {
     if (Math.abs(dX) < 10 ||
       (Math.abs(dX) < Math.abs(dY))
     ) {
-      return
+      return;
+    }
+
+    if (dX < 0 && this.state.activeIndex === this.props.images.length - 1) {
+      return;
+    }
+    if (dX > 0 && this.state.activeIndex === 0) {
+      return;
     }
 
     this.setState({
@@ -73,21 +94,13 @@ class Carousel extends Component {
 
   onNodeTouchEnd(e) {
     const currentX = e.changedTouches[0].pageX;
-    const currentY = e.changedTouches[0].pageY;
     const currentTime = Date.now();
     const dX = currentX - this.touchStartX;
-    const dY = currentY - this.touchStartY;
     const dT = currentTime - this.touchStartTime;
 
-    const width = this.state.height / 0.75;
+    const width = this.state.width;
 
-    if (Math.abs(dX) < 10 ||
-      (Math.abs(dX) < Math.abs(dY))
-    ) {
-      return;
-    }
-
-    if ( Math.abs(dX) > width / 2 || dT < 800) {
+    if (Math.abs(dX) > width / 2 || dT < 800) {
       if (dX > 0 &&
         this.state.activeIndex > 0
         ) {
@@ -114,56 +127,57 @@ class Carousel extends Component {
     });
   }
 
-
-  getPointer(number, activeIndex) {
-    let pointers = [];
-    for(let i = 0; i < number; i++) {
-      pointers.push(<span
-        className={
-          i === activeIndex ? "carousel-pointer carousel-pointer-active" : "carousel-pointer"
-        }
-        key={`pointer-${i}`}
-        >
-        </span>)
+  getPointer() {
+    const pointers = [];
+    const activeIndex = this.state.activeIndex;
+    const number = this.props.images.length;
+    for (let i = 0; i < number; i += 1) {
+      pointers.push(
+        <span
+          className={
+            i === activeIndex ? 'carousel-pointer carousel-pointer-active' : 'carousel-pointer'
+          }
+          key={`pointer-${i}`}
+        />,
+      );
     }
+
     return (
       <div className="carousel-pointer-container">
         <div className="carousel-pointers">
           { pointers }
         </div>
       </div>
-    )
+    );
   }
 
-
   render() {
-
     const { images } = this.props;
-    const { height, activeIndex, left } = this.state;
-    const width = height / 0.75;
+    const { height, width, activeIndex, left } = this.state;
 
     return (
       <div
         className="carousel-root"
-        style={{height: height}}
+        style={{ height, width }}
         onTouchStart={this.onNodeTouchStart}
         onTouchMove={this.onNodeTouchMove}
         onTouchEnd={this.onNodeTouchEnd}
+        ref={(el) => { this.carouselElement = el; }}
       >
         {
-          images.map((image, index, images) => {
-            return <img
+          images.map((image, index) => (
+            <img
               className="carousel-image"
               style={{
-                transform: `translateX(${ (index - activeIndex) * width + left }px)`
+                transform: `translateX(${((index - activeIndex) * width) + left}px)`,
               }}
-              src={image&&image.src ? image.src : image}
-              alt={ image && image.alt ? image.alt : '' }
+              src={image && image.src ? image.src : image}
+              alt={image && image.alt ? image.alt : ''}
               key={`image-${index}`}
             />
-          })
+          ))
         }
-        {this.getPointer(images.length, activeIndex)}
+        {this.getPointer()}
       </div>
     );
   }

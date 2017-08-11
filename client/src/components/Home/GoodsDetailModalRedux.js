@@ -1,91 +1,114 @@
 const initialState = {
-  numberOfGoods: 1,
-  visible: false,
+  open: false,
 };
 
-export function setNumberOfGoods(e) {
+
+export function openModal() {
+  // TODO:
   return {
-    type: 'SET_NUMBER_OF_GOODS',
-    payload: {
-      numberOfGoods: e.target.value
-    }
+    type: 'OPEN_MODAL',
   };
 }
 
 
-export function showModal() {
+export function closeModal() {
   // TODO:
-  console.log('action: showModal');
   return {
-    type: 'SHOW_MODAL'
+    type: 'CLOSE_MODAL',
   };
 }
 
-
-export function hideModal() {
-  // TODO:
-  console.log('action: hideModal')
+export function openBottomNav() {
   return {
-    type: 'HIDE_MODAL'
+    type: 'OPEN_BOTTOM_NAV',
   };
 }
 
+export function seeOthers(e) {
+  e.preventDefault();
+  return (dispatch) => {
+    dispatch({
+      type: 'CLOSE_MODAL',
+    });
 
-export function addNumberOfGoods() {
-  // TODO:
-  console.log('action: addNumberOfGoods');
+    dispatch({
+      type: 'OPEN_BOTTOM_NAV',
+    });
+  };
+}
+
+export function showNotice(message) {
   return {
-    type: 'ADD_NUMBER_OF_GOODS'
-  }
+    type: 'OPEN_NOTICE',
+    payload: message,
+  };
 }
 
+export function addToShoppingCart(e, id, quantity) {
+  // e.preventDefault();
+  const fetchHeaders = new Headers();
+  fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
-export function reduceNumberOfGoods() {
-  // TODO:
-  console.log('action: reduceNumber');
-  return {
-    type: 'REDUCE_NUMBER_OF_GOODS'
-  }
-}
+  const data = `userId=${1}&commodityId=${id}&quantity=${quantity || 1}`;
+  const fetchInit = {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: data,
+  };
 
-
-export function addToShoppingCart() {
-  // TODO:
-  return dispatch => {
-    dispatch({type: 'HIDE_MODAL'});
-      return dispatch({
-        type: 'ADD_TO_SHOPPING_CART'
-      })
-  }
-}
-
-
-export function buyNow() {
-  // TODO:
-  return dispatch => {
-    dispatch({type: 'HIDE_MODAL'})
-    return dispatch({
-      type: 'BUY_NOW'
+  return dispatch => (
+     fetch('/api/cart', fetchInit)
+    .then(response => response.json())
+    .then((json) => {
+      if (json.success !== 0) {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART',
+        });
+      } else {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART_ERROR',
+          payload: json,
+        });
+      }
+      return json;
     })
-  }
+  );
+}
+
+export function buyNow(e) {
+  // TODO:
+  e.preventDefault();
+  return (dispatch) => {
+    dispatch({ type: 'CLOSE_MODAL' });
+    return dispatch({
+      type: 'BUY_NOW',
+    });
+  };
 }
 
 
-export default function goodsDetail( state = initialState, action) {
+export default function goodsDetail(state = initialState, action) {
   // TODO:
   switch (action.type) {
-    case 'SHOW_MODAL': {
+    case 'OPEN_MODAL': {
       return {
         ...state,
-        visible: true,
-      }
+        open: true,
+      };
     }
 
-    case 'HIDE_MODAL': {
+    case 'CLOSE_MODAL': {
       return {
         ...state,
-        visible: false,
-      }
+        open: false,
+      };
+    }
+
+    case 'SET_NUMBER_OF_GOODS': {
+      return {
+        ...state,
+        numberOfGoods: action.payload.numberOfGoods,
+      };
     }
 
     default:

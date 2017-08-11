@@ -1,27 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import AppBar from '../components/AppBar';
 import BottomNavigation from '../components/BottomNavigation';
-import Drawer from '../components/Drawer';
 
-import "./Frame.css"
+import './Frame.css';
 
-class Frame extends Component {
-  render() {
-    return (
-      <div className="Frame-container">
-        <div className="Frame-top-menu">
-          <AppBar />
-          <Drawer />
-        </div>
-        <div className="Frame-content-container">
-          {this.props.children}
-        </div>
-        <div className="Frame-bottom-menu">
-          <BottomNavigation />
-        </div>
+function Frame(props) {
+  const layout = props.layout;
+
+  return (
+    <div>
+      <div className="Frame-content-container">
+        {props.children}
       </div>
-    );
-  }
+      <AppBar show={true} />
+      <BottomNavigation show={true} />
+    </div>
+  );
 }
 
+Frame.defaultProps = {
+  children: '',
+};
+
+Frame.propTypes = {
+  layout: PropTypes.object.isRequired,
+  children: PropTypes.node,
+};
+
+// export default connect(
+//   state => ({
+//     layout: state.layout,
+//   }),
+// )(Frame);
+
 export default Frame;
+

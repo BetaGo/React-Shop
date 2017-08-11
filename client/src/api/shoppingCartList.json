@@ -1,19 +1,39 @@
-{
-  "isAuthored": true,
-  "shoppingCartList": [{
-    "_id": "5933c3ef5f61e206ad04728d",
-    "author": {
-      "_id": "5933c3445f61e206ad04728b",
-      "name": "noone",
-      "gender": "m",
-      "bio": "Valar Morghulis",
-      "avatar": "avatar-noone.jpg"
-    },
-    "name": "忽如一夜春风来",
-    "desc": "千树万树梨花开",
-    "cover": "cover-1496564719828.jpg",
-    "price": 999,
-    "remain": 1,
-    "created_at": "2017-06-04 16:25"
-  }]
-}
+ [{
+     "_id": "5933c3ef5f61e206ad04728d",
+     "name": "忽如一夜春风来,hahahahahahahahahaha",
+     "desc": "千树万树梨花开",
+     "cover": "http://placeimg.com/640/480/any",
+     "price": 999,
+     "quantity":3,
+     "remain": 1,
+     "created_at": "2017-06-04 16:25"
+   },
+   {
+     "_id": "5933c3ef5f61e206ad04728d",
+     "name": "忽如一夜春风来",
+     "desc": "千树万树梨花开",
+     "cover": "http://placeimg.com/640/480/any",
+     "price": 999,
+     "quantity":5,
+     "remain": 1,
+     "created_at": "2017-06-04 16:25"
+   },{
+     "_id": "5933c3ef5f61e206ad04728d",
+     "name": "未觉池塘春草梦 阶前梧叶已秋声",
+     "desc": "千树万树梨花开",
+     "cover": "http://placeimg.com/640/480/any",
+     "price": 999,
+     "quantity":12,
+     "remain": 1,
+     "created_at": "2017-06-04 16:25"
+   },{
+     "_id": "5933c3ef5f61e206ad04728d",
+     "name": "哈哈哈哈啊哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈",
+     "desc": "千树万树梨花开",
+     "cover": "http://placeimg.com/640/480/any",
+     "price": 999,
+     "quantity":1,
+     "remain": 1,
+     "created_at": "2017-06-04 16:25"
+   }
+ ]

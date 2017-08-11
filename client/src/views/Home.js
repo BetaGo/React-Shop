@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -9,29 +10,41 @@ import GoodsGridList from '../components/Home/GoodsGridList';
 import * as detailModalActions from '../components/Home/GoodsDetailModalRedux';
 import * as gridListActions from '../components/Home/GoodsGridListRedux';
 
-class Home extends Component {
+import { loadCartsList, addCommodityToCart } from '../components/ShoppingCart/CartCardListRedux';
 
-  render() {
-    const index = this.props.goodsList.selectedIndex;
-    const goodsDetail = this.props.goodsList.goodsList[index];
+function Home(props) {
+  const index = props.goodsList.selectedIndex;
+  const goodsDetail = props.goodsList.goodsList[index];
 
-    return (
-      <div>
+  return (
+    <div>
+      <GoodsGridList
+        {...props.goodsList}
+        {...props.gridActions}
+        loadCartsList={props.loadCartsList}
+        addCommodityToCart={props.addCommodityToCart}
+      />
 
-        <GoodsDetailModal
-          {...goodsDetail}
-          {...this.props.modalActions}
-          {...this.props.goodsDetailModal}
-        />
-
-        <GoodsGridList
-          {...this.props.goodsList}
-          {...this.props.gridActions}
-        />
-      </div>
-    );
-  }
+      <GoodsDetailModal
+        {...goodsDetail}
+        {...props.modalActions}
+        {...props.goodsDetailModal}
+        loadCartsList={props.loadCartsList}
+        addCommodityToCart={props.addCommodityToCart}
+      />
+    </div>
+  );
 }
+
+Home.propTypes = {
+  goodsList: PropTypes.object.isRequired,
+  goodsDetailModal: PropTypes.object.isRequired,
+  gridActions: PropTypes.object.isRequired,
+  modalActions: PropTypes.object.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
+  addCommodityToCart: PropTypes.func.isRequired,
+};
+
 
 export default connect(
   state => ({
@@ -41,5 +54,7 @@ export default connect(
   dispatch => ({
     modalActions: bindActionCreators(detailModalActions, dispatch),
     gridActions: bindActionCreators(gridListActions, dispatch),
-  })
+    loadCartsList: bindActionCreators(loadCartsList, dispatch),
+    addCommodityToCart: bindActionCreators(addCommodityToCart, dispatch),
+  }),
 )(Home);
