@@ -10,7 +10,7 @@ import GoodsGridList from '../components/Home/GoodsGridList';
 import * as detailModalActions from '../components/Home/GoodsDetailModalRedux';
 import * as gridListActions from '../components/Home/GoodsGridListRedux';
 
-import { loadCartsList } from '../components/ShoppingCart/CartCardListRedux';
+import { loadCartsList, addCommodityToCart } from '../components/ShoppingCart/CartCardListRedux';
 
 function Home(props) {
   const index = props.goodsList.selectedIndex;
@@ -22,6 +22,7 @@ function Home(props) {
         {...props.goodsList}
         {...props.gridActions}
         loadCartsList={props.loadCartsList}
+        addCommodityToCart={props.addCommodityToCart}
       />
 
       <GoodsDetailModal
@@ -29,6 +30,7 @@ function Home(props) {
         {...props.modalActions}
         {...props.goodsDetailModal}
         loadCartsList={props.loadCartsList}
+        addCommodityToCart={props.addCommodityToCart}
       />
     </div>
   );
@@ -40,6 +42,7 @@ Home.propTypes = {
   gridActions: PropTypes.object.isRequired,
   modalActions: PropTypes.object.isRequired,
   loadCartsList: PropTypes.func.isRequired,
+  addCommodityToCart: PropTypes.func.isRequired,
 };
 
 
@@ -52,5 +55,6 @@ export default connect(
     modalActions: bindActionCreators(detailModalActions, dispatch),
     gridActions: bindActionCreators(gridListActions, dispatch),
     loadCartsList: bindActionCreators(loadCartsList, dispatch),
+    addCommodityToCart: bindActionCreators(addCommodityToCart, dispatch),
   }),
 )(Home);

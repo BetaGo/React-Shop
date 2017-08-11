@@ -18,6 +18,12 @@ export function closeModal() {
   };
 }
 
+export function openBottomNav() {
+  return {
+    type: 'OPEN_BOTTOM_NAV',
+  };
+}
+
 export function seeOthers(e) {
   e.preventDefault();
   return (dispatch) => {
@@ -31,26 +37,43 @@ export function seeOthers(e) {
   };
 }
 
-
-export function addToShoppingCart(e) {
-  // TODO:
-  /**
-   * 在商品详情页面点击添加到购物车按钮
-   * =>提交相关数据到服务器
-   * =>隐藏商品详情页 Modal
-   * =>显示底部BottomNavigation
-   */
-  e.preventDefault();
-  return (dispatch) => {
-    dispatch({
-      type: 'ADD_TO_SHOPPING_CART',
-      payload: '',
-    });
-    dispatch({ type: 'CLOSE_MODAL' });
-    dispatch({ type: 'OPEN_BOTTOM_NAV' });
+export function showNotice(message) {
+  return {
+    type: 'OPEN_NOTICE',
+    payload: message,
   };
 }
 
+export function addToShoppingCart(e, id, quantity) {
+  // e.preventDefault();
+  const fetchHeaders = new Headers();
+  fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+  const data = `userId=${1}&commodityId=${id}&quantity=${quantity || 1}`;
+  const fetchInit = {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: data,
+  };
+
+  return dispatch => (
+     fetch('/api/cart', fetchInit)
+    .then(response => response.json())
+    .then((json) => {
+      if (json.success !== 0) {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART',
+        });
+      } else {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART_ERROR',
+          payload: json,
+        });
+      }
+      return json;
+    })
+  );
+}
 
 export function buyNow(e) {
   // TODO:

@@ -24,6 +24,49 @@ export function loadCartsList() {
   };
 }
 
+export function addCommodityToCart(e, userId, commodityId, quantity) {
+  /**
+   * 点击商品卡片上的 添加到购物车ICON:
+   * =>提交信息到服务器
+   * =>显示顶部AppBar
+   * =>显示底部BottomNavigation
+   */
+
+  // e.stopPropagation();
+  const fetchHeaders = new Headers();
+  fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+  // const formData = new FormData();
+  // formData.append('userId', userId);
+  // formData.append('commodityId', commodityId);
+  // formData.append('quantity', quantity || 1);
+
+  const data = `userId=${userId}&commodityId=${commodityId}&quantity=${quantity || 1}`;
+  const fetchInit = {
+    method: 'POST',
+    headers: fetchHeaders,
+    body: data,
+  };
+
+  return (dispatch) => {
+    fetch('/api/cart', fetchInit)
+    .then(response => response.json())
+    .then((json) => {
+      if (json.success !== 0) {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART_SUCCESS',
+        });
+      } else {
+        dispatch({
+          type: 'ADD_TO_SHOPPING_CART_ERROR',
+          payload: json,
+        });
+      }
+      return json;
+    });
+  };
+}
+
 export function deleteCommodity(userId, commodityId) {
   const fetchHeaders = new Headers();
   fetchHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -140,6 +183,17 @@ export default function cartCardList(state = initialState, action) {
       };
     }
 
+    case 'ADD_TO_SHOPPING_CART_SUCCESS': {
+      return {
+        ...state,
+      };
+    }
+
+    case 'ADD_TO_SHOPPING_CART_ERROR': {
+      return {
+        ...state,
+      };
+    }
     case 'DELETE_COMMODITY_FROM_CART_SUCCESS': {
       const commodityId = action.payload;
       const goods = deleteCommodityById(state, commodityId);

@@ -44,6 +44,7 @@ class GoodsDetailModal extends Component {
     this.addNumberOfGoods = this.addNumberOfGoods.bind(this);
     this.reduceNumberOfGoods = this.reduceNumberOfGoods.bind(this);
     this.inputNumberOfGoods = this.inputNumberOfGoods.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentWillReceiveProps() {
@@ -92,13 +93,30 @@ class GoodsDetailModal extends Component {
     });
   }
 
+  addToCart(e, commodityId, quantity) {
+    const { addToShoppingCart, loadCartsList, closeModal, showNotice, openBottomNav } = this.props;
+    e.preventDefault();
+    return Promise.resolve({ e, commodityId, quantity })
+    .then(msg => addToShoppingCart(msg.e, msg.commodityId, quantity))
+    .then((msg) => {
+      console.log(`msg: ${msg}`);
+      if (msg && msg.success !== 0) {
+        loadCartsList();
+        closeModal();
+        openBottomNav();
+      } else {
+        showNotice('添加商品到购物车失败！');
+      }
+      return msg;
+    });
+  }
+
   render() {
     const { quantity } = this.state;
     const classes = this.props.classes;
-    const { open, images, name, desc, remain } = this.props;
+    const { commodity_id, open, images, name, desc, remain } = this.props;
     const {
       seeOthers,
-      addToShoppingCart,
       buyNow,
       } = this.props;
     return (
@@ -149,7 +167,7 @@ class GoodsDetailModal extends Component {
               <ExploreIcon />
               看看别的
             </Button>
-            <Button color="primary" onTouchTap={addToShoppingCart}>
+            <Button color="primary" onTouchTap={e => this.addToCart(e, commodity_id, quantity)}>
               <AddShoppingCartIcon />
               加入购物车
             </Button>
@@ -168,6 +186,7 @@ class GoodsDetailModal extends Component {
 
 GoodsDetailModal.propTypes = {
   classes: PropTypes.object.isRequired,
+  commodity_id: PropTypes.number,
   open: PropTypes.bool,
   images: PropTypes.array,
   name: PropTypes.string,
@@ -177,15 +196,19 @@ GoodsDetailModal.propTypes = {
   seeOthers: PropTypes.func.isRequired,
   addToShoppingCart: PropTypes.func.isRequired,
   buyNow: PropTypes.func.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
+  showNotice: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  openBottomNav: PropTypes.func.isRequired,
 };
 
 GoodsDetailModal.defaultProps = {
-  classes: PropTypes.object.isRequired,
   open: false,
   images: [],
   name: ' ',
   desc: ' ',
   remain: 1,
+  commodity_id: 1,
 };
 
 export default withStyles(styleSheet)(GoodsDetailModal);
