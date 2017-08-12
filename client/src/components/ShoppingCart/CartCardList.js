@@ -85,7 +85,7 @@ class CartCardList extends Component {
 
   render() {
     const { classes, goods, loading, error } = this.props;
-    const { openBottomNav,
+    const { // openBottomNav,
       deleteCommodityWithNotice,
       addCommodityToCart,
       loadCartsList,
@@ -144,7 +144,7 @@ CartCardList.propTypes = {
   error: PropTypes.bool.isRequired,
   deleteCommodityWithNotice: PropTypes.func.isRequired,
   openAppBar: PropTypes.func.isRequired,
-  openBottomNav: PropTypes.func.isRequired,
+  // openBottomNav: PropTypes.func.isRequired,
   closeBottomNav: PropTypes.func.isRequired,
   addCommodityToCart: PropTypes.func.isRequired,
   loadCartsList: PropTypes.func.isRequired,

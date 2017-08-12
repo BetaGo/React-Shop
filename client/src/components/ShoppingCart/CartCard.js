@@ -78,6 +78,11 @@ class CartCard extends Component {
     this.inputNumberOfGoods = this.inputNumberOfGoods.bind(this);
     this.handleOpenMenu = this.handleOpenMenu.bind(this);
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
+    this.getInputRef = this.getInputRef.bind(this);
+  }
+
+  getInputRef(input) {
+    this.input = input;
   }
 
   setNumberOfGoods(quantity) {
@@ -146,6 +151,11 @@ class CartCard extends Component {
     this.setState({
       quantity: quantity || 0,
     });
+    if (this.input) {
+      const currQuantity = quantity === 0 ? 1 : quantity;
+      const input = this.input;
+      input.onBlur = this.setNumberOfGoods(currQuantity);
+    }
   }
 
   handleOpenMenu(e) {
@@ -209,7 +219,7 @@ class CartCard extends Component {
                       handleAdd={this.addNumberOfGoods}
                       handleRemove={this.reduceNumberOfGoods}
                       handleOnchange={this.inputNumberOfGoods}
-                      onBlur={() => this.setNumberOfGoods(quantity)}
+                      getInputRef={this.getInputRef}
                     />
                   </div>
                   {/* <Button

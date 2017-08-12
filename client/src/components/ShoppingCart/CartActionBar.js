@@ -6,6 +6,12 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Checkbox from 'material-ui/Checkbox';
 import FormControlLabel from 'material-ui/Form/FormControlLabel';
 import Button from 'material-ui/Button';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
 import IconButton from 'material-ui/IconButton';
@@ -74,6 +80,7 @@ class CartActionBar extends Component {
 
   state = {
     isShowBottomNav: false,
+    open: false,
   }
 
   getBottomNav() {
@@ -83,35 +90,52 @@ class CartActionBar extends Component {
     const myOrderIcon = <IconPerson />;
 
     return (
-      <BottomNavigation value={1} showLabels>
+      <div>
+        <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
+          <DialogTitle>
+            结算功能暂时不可用
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+            本项目只是业余学习练手用哒，所以没有支付结算相关的东西啦～^_^
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleRequestClose} color="primary">
+              关闭
+            </Button>
+          </DialogActions>
+        </Dialog>
 
-        <BottomNavigationButton
-          label={
-            <span>
-              <NavLink className={classes.link} to="/goods-list" />
-            </span>
-          }
-          icon={goodsListIcon}
-        />
+        <BottomNavigation value={1} showLabels>
+          <BottomNavigationButton
+            label={
+              <span>
+                <NavLink className={classes.link} to="/goods-list" />
+              </span>
+            }
+            icon={goodsListIcon}
+          />
 
-        <BottomNavigationButton
-          label={
-            <span>
-              <NavLink className={classes.link} to="/shopping-cart" />
-            </span>
-          }
-          icon={shoppingCartIcon}
-        />
+          <BottomNavigationButton
+            label={
+              <span>
+                <NavLink className={classes.link} to="/shopping-cart" />
+              </span>
+            }
+            icon={shoppingCartIcon}
+          />
 
-        <BottomNavigationButton
-          label={
-            <span>
-              <NavLink className={classes.link} to="/my-order" />
-            </span>
-          }
-          icon={myOrderIcon}
-        />
-      </BottomNavigation>
+          <BottomNavigationButton
+            label={
+              <span>
+                <NavLink className={classes.link} to="/my-order" />
+              </span>
+            }
+            icon={myOrderIcon}
+          />
+        </BottomNavigation>
+      </div>
     );
   }
 
@@ -133,7 +157,11 @@ class CartActionBar extends Component {
         <div className={classes.total}>
           <Typography className={classes.totalHeader} type="title">合计：￥{this.props.totalPrice}</Typography>
         </div>
-        <Button color="accent" raised>
+        <Button
+          color="accent"
+          raised
+          onTouchTap={this.handleOpen}
+        >
           去结算({this.props.totalQuantity})
         </Button>
       </div>
@@ -151,6 +179,16 @@ class CartActionBar extends Component {
       </IconButton>
     );
   }
+
+  handleRequestClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleOpen = (e) => {
+    e.preventDefault();
+    this.setState({ open: true });
+  };
+
   render() {
     const { classes } = this.props;
     const className = classNames(

@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('QuantityWrapper', {
 
 function QuantityWrapper(props) {
   const classes = props.classes;
-  const { handleRemove, handleAdd, handleOnchange, quantity } = props;
+  const { handleRemove, handleAdd, handleOnchange, quantity, getInputRef } = props;
   return (
     <div className={classes.root}>
       <IconButton
@@ -50,6 +50,7 @@ function QuantityWrapper(props) {
         className={classes.textField}
         inputClassName={classes.input}
         onChange={handleOnchange}
+        inputRef={input => getInputRef(input)}
       />
 
       <IconButton
@@ -71,11 +72,13 @@ QuantityWrapper.propTypes = {
   quantity: PropTypes.number.isRequired,
   disableAdd: PropTypes.bool,
   disableRemove: PropTypes.bool,
+  getInputRef: PropTypes.func,
 };
 
 QuantityWrapper.defaultProps = {
   disableAdd: false,
   disableRemove: false,
+  getInputRef: () => {},
 };
 
 export default withStyles(styleSheet)(QuantityWrapper);
