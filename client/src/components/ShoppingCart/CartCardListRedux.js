@@ -48,7 +48,7 @@ export function addCommodityToCart(e, userId, commodityId, quantity) {
     body: data,
   };
 
-  return (dispatch) => {
+  return dispatch => (
     fetch('/api/cart', fetchInit)
     .then(response => response.json())
     .then((json) => {
@@ -63,8 +63,8 @@ export function addCommodityToCart(e, userId, commodityId, quantity) {
         });
       }
       return json;
-    });
-  };
+    })
+  );
 }
 
 export function deleteCommodity(userId, commodityId) {
@@ -77,7 +77,7 @@ export function deleteCommodity(userId, commodityId) {
     headers: fetchHeaders,
     body: data,
   };
-  return (dispatch) => {
+  return dispatch => (
     fetch('/api/cart', fetchInit)
     .then(res => res.json())
     .then((json) => {
@@ -88,8 +88,8 @@ export function deleteCommodity(userId, commodityId) {
         });
       }
       return json;
-    });
-  };
+    })
+  );
 }
 
 // export function deleteCommodityWithNotice(userId, commodity, message) {
@@ -141,6 +141,12 @@ export function deleteCommodityWithNotice(userId, commodityId, message) {
 export function openBottomNav() {
   return {
     type: 'OPEN_BOTTOM_NAV',
+  };
+}
+
+export function closeBottomNav() {
+  return {
+    type: 'CLOSE_BOTTOM_NAV',
   };
 }
 

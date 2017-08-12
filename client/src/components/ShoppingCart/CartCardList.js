@@ -37,6 +37,7 @@ class CartCardList extends Component {
   componentDidMount() {
     // 强制显示顶部 AppBar
     this.props.openAppBar();
+    this.props.closeBottomNav();
   }
 
   getTotalPrice() {
@@ -84,12 +85,12 @@ class CartCardList extends Component {
 
   render() {
     const { classes, goods, loading, error } = this.props;
-    const { openBottomNav, deleteCommodityWithNotice } = this.props;
+    const { openBottomNav,
+      deleteCommodityWithNotice,
+      addCommodityToCart,
+      loadCartsList,
+    } = this.props;
     const cartName = this.state.cart.map(a => a.name);
-
-    if (loading) {
-      return <LoadingCircle />;
-    }
 
     if (error) {
       return (
@@ -101,7 +102,7 @@ class CartCardList extends Component {
 
     if (goods.length === 0) {
       // 如果购物车为空，强制显示底部导航栏。
-      openBottomNav();
+      // openBottomNav();
       return (
         <div className={classes.root}>
           购物车里面什么都没有。。
@@ -111,6 +112,7 @@ class CartCardList extends Component {
 
     return (
       <div className={classes.root}>
+        {loading ? <LoadingCircle /> : null}
         {
           goods.map(commodity => (
             <CartCard
@@ -119,6 +121,8 @@ class CartCardList extends Component {
               handleSelect={this.handleSelect}
               key={`cart-card-${commodity.commodity_id}`}
               deleteCommodityWithNotice={deleteCommodityWithNotice}
+              addCommodityToCart={addCommodityToCart}
+              loadCartsList={loadCartsList}
             />
           ))
         }
@@ -141,6 +145,9 @@ CartCardList.propTypes = {
   deleteCommodityWithNotice: PropTypes.func.isRequired,
   openAppBar: PropTypes.func.isRequired,
   openBottomNav: PropTypes.func.isRequired,
+  closeBottomNav: PropTypes.func.isRequired,
+  addCommodityToCart: PropTypes.func.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCardList);

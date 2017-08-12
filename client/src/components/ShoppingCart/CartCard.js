@@ -80,19 +80,56 @@ class CartCard extends Component {
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
   }
 
+  setNumberOfGoods(quantity) {
+    const { commodity_id, addCommodityToCart, loadCartsList } = this.props;
+    if (quantity && quantity !== this.state.quantity) {
+      return Promise.resolve(quantity)
+      .then(q => addCommodityToCart(null, 1, commodity_id, q))
+      .then((msg) => {
+        console.log(`msg: ${msg}`);
+        if (msg.success !== 0) {
+          loadCartsList();
+        }
+        return msg && msg.type;
+      });
+    }
+
+    return Promise.resolve({ success: 0 });
+  }
+
   addNumberOfGoods(e) {
     // TODO: 与服务器通讯，检查商品数量是否充足
     e.preventDefault();
-    this.setState({
-      quantity: this.state.quantity + 1,
-    });
+    if (this.state.quantity < this.props.remain) {
+      const quantity = this.state.quantity + 1;
+      Promise.resolve(this.setNumberOfGoods(quantity))
+      .then((msg) => {
+        if (msg && msg.success === 0) {
+          alert('修改失败');
+          console.log(msg);
+        } else {
+          this.setState({
+            quantity,
+          });
+        }
+      });
+    }
   }
 
   reduceNumberOfGoods(e) {
     e.preventDefault();
     if (this.state.quantity > 1) {
-      this.setState({
-        quantity: this.state.quantity - 1,
+      const quantity = this.state.quantity - 1;
+      Promise.resolve(this.setNumberOfGoods(quantity))
+      .then((msg) => {
+        if (msg && msg.success === 0) {
+          alert('修改失败');
+          console.log(msg);
+        } else {
+          this.setState({
+            quantity,
+          });
+        }
       });
     }
   }
@@ -172,6 +209,7 @@ class CartCard extends Component {
                       handleAdd={this.addNumberOfGoods}
                       handleRemove={this.reduceNumberOfGoods}
                       handleOnchange={this.inputNumberOfGoods}
+                      onBlur={() => this.setNumberOfGoods(quantity)}
                     />
                   </div>
                   {/* <Button
@@ -200,6 +238,9 @@ CartCard.propTypes = {
   deleteCommodityWithNotice: PropTypes.func.isRequired,
   isSelected: PropTypes.bool.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  addCommodityToCart: PropTypes.func.isRequired,
+  loadCartsList: PropTypes.func.isRequired,
+  remain: PropTypes.number.isRequired,
 };
 
 export default withStyles(styleSheet)(CartCard);
