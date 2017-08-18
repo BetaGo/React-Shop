@@ -31,6 +31,26 @@ export function loadGoodsList() {
   };
 }
 
+export function loadCartsList() {
+  return (dispatch) => {
+    dispatch({ type: 'LOAD_CARTS_LIST' });
+    return fetch('/api/cart/?userId=1')
+      .then(response => response.json())
+      .then((json) => {
+        dispatch({
+          type: 'LOAD_CARTS_LIST_SUCCESS',
+          payload: json,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: 'LOAD_CARTS_LIST_ERROR',
+          payload: error,
+        });
+      });
+  };
+}
+
 export function addToShoppingCart(e, id, quantity) {
   /**
    * 点击商品卡片上的 添加到购物车ICON:

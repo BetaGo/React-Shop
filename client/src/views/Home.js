@@ -10,51 +10,56 @@ import GoodsGridList from '../components/Home/GoodsGridList';
 import * as detailModalActions from '../components/Home/GoodsDetailModalRedux';
 import * as gridListActions from '../components/Home/GoodsGridListRedux';
 
-import { loadCartsList, addCommodityToCart } from '../components/ShoppingCart/CartCardListRedux';
 
 function Home(props) {
-  const index = props.goodsList.selectedIndex;
-  const goodsDetail = props.goodsList.goodsList[index];
-
   return (
     <div>
       <GoodsGridList
-        {...props.goodsList}
+        {...props.list}
         {...props.gridActions}
-        loadCartsList={props.loadCartsList}
-        addCommodityToCart={props.addCommodityToCart}
       />
 
       <GoodsDetailModal
-        {...goodsDetail}
+        {...props.modal}
         {...props.modalActions}
-        {...props.goodsDetailModal}
-        loadCartsList={props.loadCartsList}
-        addCommodityToCart={props.addCommodityToCart}
       />
     </div>
   );
 }
 
 Home.propTypes = {
-  goodsList: PropTypes.object.isRequired,
-  goodsDetailModal: PropTypes.object.isRequired,
+  list: PropTypes.object.isRequired,
+  modal: PropTypes.object.isRequired,
   gridActions: PropTypes.object.isRequired,
   modalActions: PropTypes.object.isRequired,
-  loadCartsList: PropTypes.func.isRequired,
-  addCommodityToCart: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  const goodsList = state.goods.goodsList;
+  const goodsDetailModal = state.goods.goodsDetailModal;
+  const index = goodsList.selectedIndex;
+  const goodsDetail = goodsList.goodsList[index];
+
+  const modal = {
+    ...goodsDetail,
+    ...goodsDetailModal,
+  };
+
+  const list = {
+    ...goodsList,
+  };
+
+  return {
+    modal,
+    list,
+  };
 };
 
 
 export default connect(
-  state => ({
-    goodsList: state.goods.goodsList,
-    goodsDetailModal: state.goods.goodsDetailModal,
-  }),
+  mapStateToProps,
   dispatch => ({
     modalActions: bindActionCreators(detailModalActions, dispatch),
     gridActions: bindActionCreators(gridListActions, dispatch),
-    loadCartsList: bindActionCreators(loadCartsList, dispatch),
-    addCommodityToCart: bindActionCreators(addCommodityToCart, dispatch),
   }),
 )(Home);
