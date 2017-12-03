@@ -12,6 +12,8 @@ import ExploreIcon from 'material-ui-icons/Explore';
 import Carousel from '../shared/Carousel/Carousel';
 import QuantityWrapper from '../shared/QuantityWrapper/QuantityWrapper';
 
+import Viewer from '../shared/3DViewer/Viewer';
+
 const styleSheet = createStyleSheet('GoodsDetailModal', {
   carousel: {
     width: '100vw',
@@ -128,7 +130,13 @@ class GoodsDetailModal extends Component {
         >
           <DialogContent>
             <div className={classes.carousel}>
-              <Carousel images={images} />
+              {/* <Carousel images={images} /> */}
+              <Viewer
+                modalConfig={{
+                  modelURL: '/3DModels/pussy_in_boots.json',
+                }}
+                className={classes.carousel}
+              />
             </div>
             <h2>{name}</h2>
             <p>{desc}</p>
