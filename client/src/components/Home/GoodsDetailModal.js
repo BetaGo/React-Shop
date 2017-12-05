@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Button from 'material-ui/Button';
+import { Switch } from 'material-ui';
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 
@@ -41,6 +42,7 @@ class GoodsDetailModal extends Component {
     super(props);
     this.state = {
       quantity: 1,
+      view3d: false,
     };
 
     this.addNumberOfGoods = this.addNumberOfGoods.bind(this);
@@ -130,14 +132,17 @@ class GoodsDetailModal extends Component {
         >
           <DialogContent>
             <div className={classes.carousel}>
-              {/* <Carousel images={images} /> */}
-              <Viewer
-                modelConfig={{
-                  modelURL: '/3DModels/pussy_in_boots.json',
-                }}
-                className={classes.carousel}
-              />
+              {
+                this.state.view3d
+                  ? <Viewer
+                    modelConfig={{
+                      modelURL: '/3DModels/pussy_in_boots.json',
+                    }}
+                  />
+                  : <Carousel images={images} />
+              }
             </div>
+            <p>3d显示：<Switch onChange={(e, checked) => this.setState({ view3d: checked })} /></p>
             <h2>{name}</h2>
             <p>{desc}</p>
             <QuantityWrapper

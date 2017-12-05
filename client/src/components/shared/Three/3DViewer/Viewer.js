@@ -9,16 +9,14 @@ class Viewer extends Component {
     model.animate();
   }
   render() {
-    let { className, style } = this.props;
-    if (!className && !style) {
-      style = {
-        width: 600,
-        height: 400,
-      };
+    const { width, height } = this.props;
+    const style = {
+      width: width || '100%',
+      height: height || '100%',
     }
 
     return (
-      <div className={className} style={style} ref={e => (this.element = e)} />
+      <div style={style} ref={e => (this.element = e)} />
     );
   }
 }

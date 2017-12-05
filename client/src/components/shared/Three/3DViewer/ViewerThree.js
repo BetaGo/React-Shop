@@ -30,7 +30,7 @@ export default function createModel({
     );
     camera.position.set(...cameraPosition);
 
-    renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(element.clientWidth, element.clientHeight);
     element.appendChild(renderer.domElement);
 
