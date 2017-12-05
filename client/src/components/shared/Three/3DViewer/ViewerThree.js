@@ -1,5 +1,5 @@
 import * as originalThree from 'three';
-import orbitControlEnhancer from '../../../utils/three/OrbitControls';
+import orbitControlEnhancer from '../utils/OrbitControls';
 
 const THREE = orbitControlEnhancer(originalThree);
 

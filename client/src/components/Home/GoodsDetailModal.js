@@ -12,7 +12,7 @@ import ExploreIcon from 'material-ui-icons/Explore';
 import Carousel from '../shared/Carousel/Carousel';
 import QuantityWrapper from '../shared/QuantityWrapper/QuantityWrapper';
 
-import Viewer from '../shared/3DViewer/Viewer';
+import Viewer from '../shared/Three/3DViewer/Viewer';
 
 const styleSheet = createStyleSheet('GoodsDetailModal', {
   carousel: {
