@@ -132,7 +132,7 @@ class GoodsDetailModal extends Component {
             <div className={classes.carousel}>
               {/* <Carousel images={images} /> */}
               <Viewer
-                modalConfig={{
+                modelConfig={{
                   modelURL: '/3DModels/pussy_in_boots.json',
                 }}
                 className={classes.carousel}
