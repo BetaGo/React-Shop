@@ -1,23 +1,22 @@
 import * as originalThree from 'three';
-import orbitControlEnhancer from '../utils/OrbitControls';
 
-const THREE = orbitControlEnhancer(originalThree);
+let THREE = Object.assign({}, originalThree);
 
 export default function createModel({
   element,
-  isControllable = true,
+  isOrbitControllable = true,
+  isDeviceOrbitControllable = true,
   modelURL = '',
   globalLight = 0x606060,
   primaryLight = 0xcccccc,
   secondaryLight = 0x909090,
   cameraPosition = [15, 15, 15],
 }) {
-  let scene;
-  let camera;
-  let renderer;
-
-  // let directionalLight1, directionalLight2;
-  let controls;
+  let scene;       // 场景
+  let camera;      // 相机
+  let renderer;    // 渲染器
+  let orbitControls;    // 点击，触摸控制器
+  let deviceOrientationControls;  // 设备陀螺仪控制器
 
   function init() {
     scene = new THREE.Scene();
@@ -31,14 +30,19 @@ export default function createModel({
     camera.position.set(...cameraPosition);
 
     renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    // renderer = new THREE.WebGLRenderer();
+    
     renderer.setSize(element.clientWidth, element.clientHeight);
     element.appendChild(renderer.domElement);
 
     // 控制器
-    if (isControllable) {
-      // require('../js/controls/OrbitControls')(THREE);
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.addEventListener('change', render);
+    if (isOrbitControllable) {
+      import('../utils/OrbitControls.js')
+        .then(enhanceTHREE => {
+          THREE = enhanceTHREE.default(THREE);
+          orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+          orbitControls.addEventListener('change', render);
+        });
     }
 
     // 全局环境光
@@ -61,30 +65,32 @@ export default function createModel({
       modelURL,
       // load 完成后的回调
       (geometry, materials) => {
-        // const material = materials[0];
-        // material.emissive.setHex(0x181818);
         const object = new THREE.Mesh(geometry, materials);
+        if (isDeviceOrbitControllable) {
+          import('../utils/DeviceOrientationControls.js')
+            .then(enhanceTHREE => {
+              THREE = enhanceTHREE.default(THREE);
+              deviceOrientationControls = new THREE.DeviceOrientationControls( object );
+            });
+        }
         scene.add(object);
       },
     );
   }
 
   function render() {
-    // camera.position.x += (mouseX - camera.position.x) * 0.05;
-    // camera.position.y += (-mouseY - camera.position.y) * 0.05;
-    // camera.position.x += mouseX * 0.05;
     camera.lookAt(scene.position);
     renderer.render(scene, camera);
   }
 
 
   function animate() {
-    // const time = Date.now() / 300;
-    // directionalLight1.position.x = Math.cos(time) * 50;
-    // directionalLight1.position.y = Math.sin(time) * 50;
     requestAnimationFrame(animate);
-    if (controls) {
-      controls.update();
+    if (orbitControls) {
+      orbitControls.update();
+    }
+    if (deviceOrientationControls) {
+      deviceOrientationControls.update();
     }
     render();
   }
